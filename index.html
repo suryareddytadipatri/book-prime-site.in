@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book Prime.in India</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff8f1;--bg2:#fdeedd;--green:#3b1d5a;--amber:#ff6b35;--text:#24162f;--muted:#6b5f76;--line:#efdfd0;--sand:#ffd9c2;--teal:#0f766e}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:clamp(15px,.3vw + 14px,17px);line-height:1.6}
+h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif}
+a{color:inherit;text-decoration:none}
+svg{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+button{font-family:inherit;cursor:pointer;border:0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:99px;font-weight:600;background:var(--green);color:#fff;transition:.2s}.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(59,29,90,.25)}
+.btn.alt{background:#fff;color:var(--text);border:1px solid var(--line)}
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(255,248,241,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:18px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:700;font-size:1.5em}
+.logo i{background:var(--green);color:#fff;width:36px;height:36px;border-radius:8px;display:grid;place-items:center}
+.links{display:flex;gap:4px}.links a{padding:8px 16px;border-radius:8px;color:var(--muted);font-weight:500}.links a.on,.links a:hover{background:var(--bg2);color:var(--text)}
+.search{margin-left:auto;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px;width:min(280px,36vw)}
+.search input{border:0;outline:0;width:100%;font:inherit;background:none}
+.ico{background:none;position:relative;color:var(--text);padding:6px;font-size:1.1em}
+.badge{position:absolute;top:-4px;right:-6px;background:var(--green);color:#fff;font-size:11px;border-radius:99px;min-width:18px;height:18px;display:grid;place-items:center}
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;padding:clamp(40px,7vw,90px) 0;position:relative}
+.hero:before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,#ffd9c2,transparent 70%);left:-140px;top:-40px;z-index:-1}
+.eyebrow{color:var(--amber);letter-spacing:.18em;font-weight:700;font-size:.8em;text-transform:uppercase;display:inline-block;background:#fff;border:1px solid var(--line);padding:6px 14px;border-radius:99px}
+.hero h1{font-size:clamp(2.3em,5.6vw,4.1em);line-height:1.1;margin:20px 0}
+.hero h1 em{font-style:italic;color:#fff;background:linear-gradient(100deg,var(--amber),#ff3d71);padding:0 .25em;border-radius:12px;white-space:nowrap}
+.hero p.lead{color:var(--muted);font-size:1.12em;max-width:30em;margin-bottom:30px}
+.btns{display:flex;gap:14px;flex-wrap:wrap}
+.qwrap{position:relative;padding:20px 0 30px;perspective:1000px}
+.qwrap:before,.qwrap:after{content:"";position:absolute;inset:36px 8px 10px;border-radius:24px;z-index:0}
+.qwrap:before{background:var(--sand);transform:rotate(-5deg)}
+.qwrap:after{background:#fff;border:1px solid var(--line);transform:rotate(3deg)}
+.qcard{position:relative;z-index:1;color:#fff;border-radius:24px;padding:clamp(24px,4vw,44px);box-shadow:0 24px 50px rgba(36,22,47,.28);background:var(--green);transition:transform .38s ease,opacity .38s ease,background .6s;min-height:360px;display:flex;flex-direction:column}
+.qcard.out{transform:rotateY(90deg);opacity:.15}
+.qcard>svg{width:46px;height:46px;color:var(--amber)}
+.qcard blockquote{font-family:'Fraunces',serif;font-size:clamp(1.3em,2.4vw,1.85em);line-height:1.45;margin:22px 0 16px;flex:1}
+.qcard cite{font-style:normal;opacity:.85}
+.qfoot{display:flex;justify-content:space-between;align-items:center;margin-top:26px;padding-top:20px;border-top:1px solid rgba(255,255,255,.18)}
+.qtag{background:rgba(255,255,255,.14);padding:5px 14px;border-radius:99px;font-size:.85em;font-weight:600}
+.dots{display:flex;gap:7px}.dots button{width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.35);padding:0;transition:.3s}.dots button.on{width:26px;background:var(--amber)}
+.sticker{position:absolute;z-index:2;background:#fff;border:1px solid var(--line);border-radius:99px;padding:8px 16px;font-weight:700;font-size:.85em;box-shadow:0 8px 20px rgba(0,0,0,.12);animation:fl 4s ease-in-out infinite}
+.sticker.a{top:0;right:6%}.sticker.b{bottom:6px;left:2%;animation-delay:1.5s}
+@keyframes fl{50%{transform:translateY(-8px)}}
+@media(prefers-reduced-motion:reduce){.qcard,.sticker,.track{animation:none;transition:none}}
+/* marquee */
+.strip{background:var(--amber);color:#fff;overflow:hidden;white-space:nowrap;padding:14px 0;margin:10px 0}
+.track{display:inline-flex;gap:0;animation:mq 30s linear infinite}
+.track span{letter-spacing:.12em;font-weight:600;font-size:.9em;padding:0 22px;text-transform:uppercase}
+.track span:after{content:"✦";color:var(--green);margin-left:44px}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* books */
+#books{padding:64px 0 40px}
+#books h2{font-size:clamp(1.8em,4vw,2.5em);margin-bottom:6px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:16px 0 22px}
+.chip{background:#fff;border:1px solid var(--line);color:var(--text);padding:8px 18px;border-radius:99px;white-space:nowrap;font-weight:500}
+.chip.on{background:var(--green);color:#fff;border-color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:stretch}
+.item{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.cover{aspect-ratio:3/4;display:grid;place-items:center;padding:14px;text-align:center;font-family:'Fraunces',serif;font-weight:700;font-size:1.15em;color:#fff}
+.heart{position:absolute;top:8px;right:8px;background:#fff;border-radius:50%;width:34px;height:34px;display:grid;place-items:center;color:var(--text)}
+.heart.on{color:#c0392b}.heart.on svg{fill:#c0392b}
+.info{padding:14px;display:flex;flex-direction:column;gap:4px;flex:1}.info small{color:var(--muted)}
+.price{font-weight:600;color:var(--green)}.info .btn{margin-top:auto;padding:10px;justify-content:center;font-size:.95em}
+.item.sold .cover{filter:grayscale(.8);opacity:.6}.tag{position:absolute;top:8px;left:8px;z-index:1;background:#be123c;color:#fff;font-size:.75em;font-weight:700;padding:4px 10px;border-radius:99px}.tag.low{background:#d97706}.btn[disabled]{background:#9ca3af;cursor:not-allowed;transform:none;box-shadow:none}
+.empty{color:var(--muted);padding:30px 0}
+/* features */
+.features{padding:56px 0 20px}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feat{display:block;background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;transition:.25s}
+.feat:hover{transform:translateY(-6px);box-shadow:0 16px 30px rgba(59,29,90,.12)}
+.feat i{background:linear-gradient(135deg,var(--amber),#ff3d71);color:#fff;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;margin-bottom:16px}
+.feat h3{font-size:1.25em;margin-bottom:6px}.feat p{color:var(--muted)}
+#about{padding:56px 0 64px;text-align:center}#about p{max-width:42em;margin:12px auto 0;color:var(--muted)}
+/* footer */
+footer{background:var(--green);color:#e9efe9;padding-top:56px}
+.fgrid2{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:40px;padding-bottom:40px}
+footer h4{letter-spacing:.1em;font-size:.95em;color:#a9bfb2;margin-bottom:16px}
+footer .logo{color:#fff;font-size:1.4em;margin-bottom:14px}
+footer li{list-style:none;margin-bottom:10px}footer ul{padding:0}
+footer a:hover{color:var(--amber)}
+.crow{display:flex;gap:10px;align-items:center}
+.copy{border-top:1px solid rgba(255,255,255,.15);text-align:center;padding:18px 20px;font-size:.9em;color:#c4d3c9}
+.wa{position:fixed;right:18px;bottom:18px;z-index:15;background:#25d366;color:#fff;border-radius:99px;padding:12px 16px;display:flex;gap:8px;align-items:center;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+/* drawer */
+#shade{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.3s;z-index:30}
+#shade.open{opacity:1;pointer-events:auto}
+#drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:#fff;transform:translateX(100%);transition:.3s;z-index:31;padding:22px;display:flex;flex-direction:column;gap:10px}
+#drawer.open{transform:none}
+#lines{flex:1;overflow:auto}.line{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.x{background:none;font-size:1.1em;padding:0 8px;color:var(--muted)}
+#drawer input{padding:11px;border-radius:8px;border:1px solid var(--line);font:inherit}
+
+.info strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:3.2em}
+.acct{display:flex;gap:6px;align-items:center;font:inherit;font-weight:600}.acct span{font-size:.9em}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;place-items:center;z-index:50;padding:16px}.modal.open{display:grid}
+.mbox{background:#fff;border-radius:20px;padding:30px;width:min(420px,100%);display:flex;flex-direction:column;gap:12px;position:relative}
+.mbox input,.co input,.co select{padding:15px 16px;border:1px solid var(--line);border-radius:12px;font:inherit;background:#fff;width:100%}
+.full{width:100%;justify-content:center}.or{text-align:center;color:var(--muted)}.close{position:absolute;top:12px;right:14px}
+.co{position:fixed;inset:0;z-index:40;background:#fff;display:none;grid-template-columns:1fr 1fr;overflow:auto}.co.open{display:grid}
+.coL,.coR{padding:28px 20px}.coR{background:#faf6f2;border-left:1px solid var(--line)}
+.coIn{max-width:500px;display:flex;flex-direction:column;gap:14px}.coL .coIn{margin-left:auto}
+.coIn h3{font-family:inherit;font-size:1.25em;margin-top:10px}
+.phone{display:flex;border:1px solid var(--line);border-radius:12px;overflow:hidden}.phone span{padding:15px 16px;border-right:1px solid var(--line);white-space:nowrap}.phone input{border:0;border-radius:0}
+.shipbox{background:#f4f1ee;border-radius:12px;padding:18px;text-align:center;color:var(--muted)}
+.shipbox.on{background:#fff;border:2px solid var(--green);color:var(--text);display:flex;justify-content:space-between;text-align:left}
+.paybox{border:1px solid var(--line);border-radius:12px;padding:16px}.paybox p{color:var(--muted)}
+.srow{display:flex;gap:14px;align-items:center;justify-content:space-between}.srow>div:nth-child(2){flex:1}
+.thumb{width:64px;height:64px;border-radius:10px;position:relative;flex:none;color:#fff;display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:700}
+.qb{position:absolute;top:-8px;right:-8px;background:#555;color:#fff;width:24px;height:24px;border-radius:50%;font:600 12px 'Plus Jakarta Sans';display:grid;place-items:center}
+.drow{display:flex;gap:10px}.drow button{padding:0 22px;border-radius:12px;background:var(--bg2);color:var(--text);font-weight:600}
+.trow{display:flex;justify-content:space-between}.trow.t{border-top:1px solid var(--line);padding-top:16px;font-weight:700;font-size:1.2em}
+.back{background:none;color:var(--muted);text-align:left;padding:0;font:inherit}
+@media(max-width:800px){.co.open{grid-template-columns:1fr}.coR{order:-1;border-left:0;border-bottom:1px solid var(--line)}.coL .coIn{margin:0 auto}}
+@media(max-width:560px){.acct span{display:none}}
+@media(max-width:900px){
+ .hero{grid-template-columns:1fr;gap:36px}.fgrid{grid-template-columns:1fr;gap:28px}.fgrid2{grid-template-columns:1fr 1fr}
+ .links{display:none}.search{width:auto;flex:1}.grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){.fgrid2{grid-template-columns:1fr}.logo span{font-size:.9em}.wa b{display:none}.qwrap{padding-left:12px}}
+</style>
+</head>
+<body>
+<svg style="display:none"><defs>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6c-1.5-1.3-3.6-2-6-2H3v14h3c2.4 0 4.5.7 6 2 1.5-1.3 3.6-2 6-2h3V4h-3c-2.4 0-4.5.7-6 2zM12 6v14"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/></symbol>
+<symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.4a1 1 0 0 0 1 .8h9.1a1 1 0 0 0 1-.8L20.5 8H6"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-truck" viewBox="0 0 24 24"><path d="M2 5h12v11H2zM14 9h4l4 4v3h-8"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+<symbol id="i-rupee" viewBox="0 0 24 24"><path d="M6 4h12M6 9h12M6 4c6 0 8 2 8 5s-2 5-8 5l7 6"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+</defs></svg>
+
+<header><div class="wrap nav">
+  <a class="logo" href="#top"><i><svg><use href="#i-book"/></svg></i><span>BookPrime</span></a>
+  <nav class="links">
+    <a href="#top" class="on" id="nHome" onclick="view('all')">Home</a>
+    <a href="#books" onclick="view('all')">Books</a>
+    <a href="#books" onclick="view('wish')">Wishlist</a>
+    <a href="#about">About</a>
+  </nav>
+  <label class="search"><svg><use href="#i-search"/></svg><input id="q" placeholder="Search books, authors…"></label>
+  <button class="ico acct" aria-label="Login" onclick="acctClick()"><svg><use href="#i-user"/></svg><span id="acctName">Login</span></button>
+  <button class="ico" aria-label="Wishlist" onclick="view('wish');location.hash='books'"><svg><use href="#i-heart"/></svg><span class="badge" id="wcnt">0</span></button>
+  <button class="ico" aria-label="Cart" onclick="toggle()"><svg><use href="#i-cart"/></svg><span class="badge" id="cnt">0</span></button>
+</div></header>
+
+<main id="top">
+<section class="wrap hero">
+  <div>
+    <span class="eyebrow">Hyderabad · Delivering across India</span>
+    <h1>Your next favourite book is <em>one click</em> away.</h1>
+    <p class="lead">Fresh reads, timeless classics and children's treasures — picked with care and shipped to your doorstep. Pay securely in ₹.</p>
+    <div class="btns"><a class="btn" href="#books">Start Reading <svg><use href="#i-arrow"/></svg></a><a class="btn alt" href="#about">Our Story</a></div>
+  </div>
+  <div class="qwrap">
+    <span class="sticker a">★ Handpicked</span><span class="sticker b">📍 Hyderabad</span>
+    <div class="qcard" id="qcard">
+      <svg><use href="#i-book"/></svg>
+      <blockquote id="qtext"></blockquote>
+      <cite id="qby"></cite>
+      <div class="qfoot"><span class="qtag" id="qtag"></span><div class="dots" id="qdots"></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="strip"><div class="track" id="track"></div></div>
+
+<section id="books" class="wrap">
+  <h2 id="bt">All Books</h2>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="features"><div class="wrap fgrid">
+  <div class="feat"><i><svg><use href="#i-truck"/></svg></i><div><h3>Pan-India Delivery</h3><p>Shipped from Hyderabad to every state, with tracking on each order.</p></div></div>
+  <div class="feat"><i><svg><use href="#i-rupee"/></svg></i><div><h3>Fair ₹ Pricing</h3><p>What you see is what you pay. No surprise charges at checkout.</p></div></div>
+  <div class="feat"><i><svg><use href="#i-shield"/></svg></i><div><h3>Safe Payments</h3><p>UPI, cards and net banking through Razorpay's secure checkout.</p></div></div>
+</div></section>
+
+<section id="about" class="wrap">
+  <div class="eyebrow">Our Story</div>
+  <h2 style="font-size:clamp(1.8em,4vw,2.5em);margin-top:8px">A Hyderabad bookstore for readers everywhere</h2>
+  <p>Book Prime.in India brings handpicked Indian and international titles to readers across the country, at honest prices and with careful packing. Write to us on WhatsApp for recommendations or bulk orders.</p>
+</section>
+</main>
+
+<footer>
+  <div class="wrap fgrid2">
+    <div><a class="logo" href="#top"><svg><use href="#i-book"/></svg>BookPrime</a><p>India's neighbourhood online bookstore — handpicked titles, honest prices in ₹, delivered to your door.</p></div>
+    <div><h4>EXPLORE</h4><ul>
+      <li><a href="#books" onclick="view('all')">All Books</a></li>
+      <li><a href="#books" onclick="view('wish')">Wishlist</a></li>
+      <li><a href="#" onclick="toggle();return false">Cart</a></li>
+      <li><a href="#about">About Us</a></li></ul></div>
+    <div><h4>CONTACT</h4><ul>
+      <li class="crow"><svg><use href="#i-mail"/></svg><a href="mailto:bookprime.inindia@gmail.com">bookprime.inindia@gmail.com</a></li>
+      <li class="crow"><svg><use href="#i-phone"/></svg><a href="https://wa.me/917997555414" target="_blank" rel="noopener">+91 79975 55414 (WhatsApp)</a></li>
+      <li class="crow"><svg><use href="#i-pin"/></svg><span>Hyderabad, Telangana</span></li></ul></div>
+  </div>
+  <div class="copy">© 2026 Book Prime.in India. All rights reserved.</div>
+</footer>
+
+<a class="wa" href="https://wa.me/917997555414?text=Hi%20Book%20Prime.in%20India" target="_blank" rel="noopener"><svg><use href="#i-phone"/></svg><b>WhatsApp</b></a>
+
+<div id="shade" onclick="toggle()"></div>
+<aside id="drawer">
+  <div style="display:flex;justify-content:space-between;align-items:center"><h2>Your Cart</h2><button class="x" onclick="toggle()">✕</button></div>
+  <div id="lines"></div>
+  <h3>Total: ₹<span id="total">0</span></h3>
+  <button class="btn full" onclick="goCheckout()">Checkout</button>
+</aside>
+
+<div id="lmodal" class="modal"><div class="mbox">
+  <button class="x close" onclick="closeLogin()">✕</button>
+  <h2>Welcome to BookPrime</h2><p style="color:var(--muted)">Log in with Google to checkout and track your orders.</p>
+  <button class="btn alt full" onclick="gLogin()">Continue with Google</button>
+  
+</div></div>
+
+<div id="co" class="co">
+ <div class="coL"><div class="coIn">
+  <button class="back" onclick="closeCheckout()">← Back to shop</button>
+  <h3>Contact</h3><input id="cEmail" type="email" placeholder="Email">
+  <h3>Delivery</h3>
+  <input id="cName" placeholder="Full name">
+  <select id="cCountry"><option>India</option></select>
+  <select id="cState" onchange="shipUpd()"></select>
+  <input id="cAddr" placeholder="Address (house no, street, city)">
+  <input id="cPin" placeholder="PIN code" inputmode="numeric" maxlength="6">
+  <div class="phone"><span>🇮🇳 +91</span><input id="cPhone" placeholder="Phone number" inputmode="numeric" maxlength="10"></div>
+  <h3>Shipping method</h3><div id="shipBox" class="shipbox">Enter delivery details to view shipping options</div>
+  <h3>Payment</h3><div class="paybox"><b>Razorpay Secure Checkout</b><p>UPI, cards, net banking and wallets. You'll complete payment on the next screen.</p></div>
+  <button class="btn full" id="payBtn" onclick="pay()">Pay ₹0</button>
+ </div></div>
+ <div class="coR"><div class="coIn">
+  <div id="sumRows" style="display:flex;flex-direction:column;gap:16px"></div>
+  <div class="drow"><input id="dcode" placeholder="Enter discount code"><button onclick="applyCode()">Apply</button></div>
+  <div id="sumTot" style="display:flex;flex-direction:column;gap:10px"></div>
+ </div></div>
+</div>
+
+<form name="login" data-netlify="true" hidden><input name="name"><input name="email"><input name="phone"><input name="provider"><input name="uid"></form>
+<form name="order" data-netlify="true" hidden><input name="name"><input name="email"><input name="phone"><input name="state"><input name="addr"><input name="pin"><input name="items"><input name="amount"><input name="payment_id"><input name="order_id"><input name="uid"><input name="note"></form>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+const books=[
+ {id:1,t:"The Midnight Library",a:"Matt Haig",c:"Fiction",p:399,col:"#3b1d5a"},
+ {id:2,t:"Atomic Habits",a:"James Clear",c:"Self-Help",p:499,col:"#c2410c"},
+ {id:3,t:"The Alchemist",a:"Paulo Coelho",c:"Fiction",p:299,col:"#be185d"},
+ {id:4,t:"Wings of Fire",a:"A.P.J. Abdul Kalam",c:"Biographies",p:250,col:"#1d4ed8"},
+ {id:5,t:"The Immortals of Meluha",a:"Amish Tripathi",c:"Mythology",p:299,col:"#7c3aed"},
+ {id:6,t:"Panchatantra",a:"Vishnu Sharma",c:"Children",p:199,col:"#d97706"},
+ {id:7,t:"Gitanjali",a:"Rabindranath Tagore",c:"Poetry",p:225,col:"#0f766e"},
+ {id:8,t:"India After Gandhi",a:"Ramachandra Guha",c:"History",p:699,col:"#44403c"}
+];
+const catList=["Children","Classics","Fiction","Mythology","Self-Help","Biographies","Poetry","History"];
+let cat="All",mode="all",cart={},wish=new Set();
+const $=id=>document.getElementById(id);
+
+$("track").innerHTML=[...catList,...catList,...catList,...catList].map(c=>`<span>${c}</span>`).join("");
+
+function view(m){mode=m;render()}
+function render(){
+  $("bt").textContent=mode==="wish"?"Your Wishlist":"All Books";
+  $("chips").innerHTML=["All",...catList].map(c=>`<button class="chip ${c===cat?'on':''}" onclick="cat='${c}';render()">${c}</button>`).join("");
+  const q=$("q").value.toLowerCase();
+  const list=books.filter(b=>(cat==="All"||b.c===cat)&&(mode==="all"||wish.has(b.id))&&(b.t+b.a).toLowerCase().includes(q));
+  $("grid").innerHTML=list.map(b=>`<div class="item ${left(b.id)===0?'sold':''}">${tag(b.id)}<div class="cover" style="background:${b.col}">${b.t}</div>
+   <button class="heart ${wish.has(b.id)?'on':''}" aria-label="Wishlist" onclick="fav(${b.id})"><svg><use href="#i-heart"/></svg></button>
+   <div class="info"><strong>${b.t}</strong><small>${b.a}</small><span class="price">₹${b.p}</span>${left(b.id)===0?'<button class="btn" disabled>Sold out</button>':`<button class="btn" onclick="add(${b.id})">Add to cart</button>`}</div></div>`).join("")
+   ||`<p class="empty">${mode==="wish"?"Your wishlist is empty. Tap the heart on a book to save it.":"No books found."}</p>`;
+  $("wcnt").textContent=wish.size;
+}
+function fav(id){wish.has(id)?wish.delete(id):wish.add(id);render()}
+let stock=null; // filled live from Firestore
+function left(id){return stock?(stock[id]??0):null}
+function tag(id){const n=left(id);return n===0?'<span class="tag">Sold out</span>':(n!==null&&n<=3?`<span class="tag low">Only ${n} left</span>`:"")}
+function add(id){const n=left(id);if(n!==null&&(cart[id]||0)>=n)return alert(n===0?"Sorry, this book is sold out.":"Only "+n+" left in stock.");cart[id]=(cart[id]||0)+1;upd()}
+function chg(id,d){const n=left(id);if(d>0&&n!==null&&cart[id]>=n)return alert("Only "+n+" left in stock.");cart[id]+=d;if(cart[id]<=0)delete cart[id];upd()}
+function total(){return Object.entries(cart).reduce((s,[id,n])=>s+books.find(b=>b.id==id).p*n,0)}
+function upd(){
+  $("cnt").textContent=Object.values(cart).reduce((a,b)=>a+b,0);
+  $("total").textContent=total();
+  $("lines").innerHTML=Object.entries(cart).map(([id,n])=>{const b=books.find(x=>x.id==id);
+   return `<div class="line"><span>${b.t}<br><small>₹${b.p}</small></span><span><button class="x" onclick="chg(${id},-1)">−</button>${n}<button class="x" onclick="chg(${id},1)">+</button></span></div>`}).join("")||"<p>Your cart is empty</p>";
+}
+function toggle(){$("drawer").classList.toggle("open");$("shade").classList.toggle("open")}
+$("q").addEventListener("input",()=>{render()});
+
+render();upd();
+
+const quotes=[
+ {t:"A reader lives a thousand lives before he dies. The man who never reads lives only one.",b:"George R.R. Martin",g:"On reading",c:"#3b1d5a"},
+ {t:"Books are a uniquely portable magic.",b:"Stephen King",g:"On magic",c:"#0f766e"},
+ {t:"Reading is to the mind what exercise is to the body.",b:"Joseph Addison",g:"On the mind",c:"#1e3a8a"},
+ {t:"A book must be the axe for the frozen sea within us.",b:"Franz Kafka",g:"On courage",c:"#9f1239"},
+ {t:"Books are the quietest and most constant of friends.",b:"Charles W. Eliot",g:"On friendship",c:"#92400e"},
+ {t:"Today a reader, tomorrow a leader.",b:"Margaret Fuller",g:"On leading",c:"#4c1d95"},
+ {t:"Once you learn to read, you will be forever free.",b:"Frederick Douglass",g:"On freedom",c:"#115e59"},
+ {t:"We read to know we are not alone.",b:"William Nicholson",g:"On belonging",c:"#7c2d12"}
+];
+let qi=0,qt;
+function showQ(i,anim=true){
+  const card=$("qcard");
+  const set=()=>{const q=quotes[i];qi=i;card.style.background=q.c;
+    $("qtext").textContent="“"+q.t+"”";$("qby").textContent="— "+q.b;$("qtag").textContent=q.g;
+    $("qdots").innerHTML=quotes.map((_,k)=>`<button aria-label="Quote ${k+1}" class="${k===i?'on':''}" onclick="showQ(${k});startQ()"></button>`).join("")};
+  if(!anim){set();return}
+  card.classList.add("out");setTimeout(()=>{set();card.classList.remove("out")},380);
+}
+function startQ(){clearInterval(qt);qt=setInterval(()=>showQ((qi+1)%quotes.length),5000)}
+showQ(0,false);startQ();
+$("qcard").addEventListener("mouseenter",()=>clearInterval(qt));
+$("qcard").addEventListener("mouseleave",startQ);
+
+/* ===== Config (keep PRICES/COUPONS/SHIPPING in sync with netlify/functions/create-order.js) ===== */
+const COUPONS={WELCOME10:10};
+const SHIPPING={name:"Standard delivery (3–7 days)",fee:50};
+const STATES=["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Andaman and Nicobar Islands","Chandigarh","Dadra and Nagar Haveli and Daman and Diu","Delhi","Jammu and Kashmir","Ladakh","Lakshadweep","Puducherry"];
+$("cState").innerHTML='<option value="">State</option>'+STATES.map(x=>`<option>${x}</option>`).join("");
+
+/* ===== Login (Firebase: Google + mobile OTP) ===== */
+let auth=null,user=null,pendingCheckout=false,confirmRes=null,coupon=null;
+function initAuth(){
+  if(!window.FIREBASE_CONFIG||FIREBASE_CONFIG.apiKey.startsWith("YOUR")||!window.firebase)return;
+  firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();
+  // Live stock: updates the page instantly when the owner changes a quantity
+  firebase.firestore().collection("stock").onSnapshot(snap=>{
+    stock={};books.forEach(b=>stock[b.id]=0);snap.forEach(d=>stock[+d.id]=d.data().qty||0);
+    Object.keys(cart).forEach(id=>{const n=stock[id]??0;if(cart[id]>n){n?cart[id]=n:delete cart[id]}});
+    render();upd();if($("co").classList.contains("open"))sumUpd();
+  },e=>console.log("stock error",e));
+  auth.onAuthStateChanged(u=>{user=u;$("acctName").textContent=u?(u.displayName||"Account").split(" ")[0]:"Login"});
+}
+function needCfg(){alert("Login is not set up yet. Add your Firebase keys in firebase-config.js.")}
+function acctClick(){user?(confirm("Log out?")&&auth.signOut()):openLogin()}
+function openLogin(){$("lmodal").classList.add("open")}
+function closeLogin(){$("lmodal").classList.remove("open")}
+async function gLogin(){
+  if(!auth)return needCfg();
+  try{const r=await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());loginDone(r.user,"google")}catch(e){alert(e.message)}
+}
+async function sendOtp(){
+  if(!auth)return needCfg();
+  const p=$("lph").value.trim();
+  if(!/^[6-9]\d{9}$/.test(p))return alert("Enter a valid 10-digit mobile number");
+  try{
+    window.rv=window.rv||new firebase.auth.RecaptchaVerifier("recaptcha",{size:"invisible"});
+    confirmRes=await auth.signInWithPhoneNumber("+91"+p,window.rv);
+    $("phStep1").style.display="none";$("phStep2").style.display="flex";
+  }catch(e){alert(e.message);window.rv=null}
+}
+async function verifyOtp(){
+  try{const r=await confirmRes.confirm($("lotp").value.trim());loginDone(r.user,"phone")}catch(e){alert("Wrong OTP. Please try again.")}
+}
+function loginDone(u,provider){
+  closeLogin();
+  toForm("login",{name:u.displayName||"",email:u.email||"",phone:u.phoneNumber||"",provider,uid:u.uid}); // owner gets this via Netlify Forms
+  if(pendingCheckout){pendingCheckout=false;openCheckout()}
+}
+function toForm(name,data){
+  fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({"form-name":name,...data}).toString()}).catch(()=>{});
+}
+
+/* ===== Checkout ===== */
+function goCheckout(){
+  if(!Object.keys(cart).length)return alert("Your cart is empty");
+  toggle();
+  if(!user){pendingCheckout=true;return openLogin()}
+  openCheckout();
+}
+function openCheckout(){
+  $("co").classList.add("open");
+  if(user){if(user.email&&!$("cEmail").value)$("cEmail").value=user.email;
+    if(user.phoneNumber&&!$("cPhone").value)$("cPhone").value=user.phoneNumber.replace("+91","");
+    if(user.displayName&&!$("cName").value)$("cName").value=user.displayName}
+  shipUpd();
+}
+function closeCheckout(){$("co").classList.remove("open")}
+function applyCode(){
+  const c=$("dcode").value.trim().toUpperCase();
+  if(COUPONS[c])coupon=c;else{coupon=null;if(c)alert("Invalid discount code")}
+  sumUpd();
+}
+function shipUpd(){
+  const on=!!$("cState").value,b=$("shipBox");
+  b.className="shipbox"+(on?" on":"");
+  b.innerHTML=on?`<span>${SHIPPING.name}</span><b>₹${SHIPPING.fee.toFixed(2)}</b>`:"Enter delivery details to view shipping options";
+  sumUpd();
+}
+function sumUpd(){
+  $("sumRows").innerHTML=Object.entries(cart).map(([id,n])=>{const b=books.find(x=>x.id==id);
+    return `<div class="srow"><div class="thumb" style="background:${b.col}">${b.t[0]}<span class="qb">${n}</span></div><div><b>${b.t}</b><br><small>${b.a}</small></div><b>₹${(b.p*n).toFixed(2)}</b></div>`}).join("");
+  const sub=total(),disc=coupon?Math.round(sub*COUPONS[coupon]/100):0,ship=$("cState").value?SHIPPING.fee:null;
+  const grand=sub-disc+(ship||0);
+  $("sumTot").innerHTML=`<div class="trow"><span>Subtotal</span><span>₹${sub.toFixed(2)}</span></div>`
+   +(disc?`<div class="trow"><span>Discount (${coupon})</span><span>−₹${disc.toFixed(2)}</span></div>`:"")
+   +`<div class="trow"><span>Shipping</span><span>${ship===null?"Choose shipping destination":"₹"+ship.toFixed(2)}</span></div>`
+   +`<div class="trow t"><span>Total</span><span>₹${grand.toFixed(2)}</span></div>`;
+  $("payBtn").textContent="Pay ₹"+grand.toFixed(2);
+}
+
+/* ===== Payment (order is created & verified on the server) ===== */
+async function pay(){
+  if(!user)return openLogin();
+  const d={email:$("cEmail").value.trim(),name:$("cName").value.trim(),state:$("cState").value,addr:$("cAddr").value.trim(),pin:$("cPin").value.trim(),phone:$("cPhone").value.trim()};
+  if(!/^\S+@\S+\.\S+$/.test(d.email)||!d.name||!d.state||!d.addr||!/^\d{6}$/.test(d.pin)||!/^[6-9]\d{9}$/.test(d.phone))
+    return alert("Please fill in all delivery details correctly");
+  const btn=$("payBtn");btn.disabled=true;
+  try{
+    const items=Object.entries(cart).map(([id,n])=>({id:+id,qty:n}));
+    const o=await(await fetch("/.netlify/functions/create-order",{method:"POST",body:JSON.stringify({items,coupon,state:d.state})})).json();
+    if(!o.order_id)throw new Error(o.error||"Could not create the order");
+    const rzp=new Razorpay({key:o.key_id,order_id:o.order_id,amount:o.amount,currency:"INR",name:"Book Prime.in India",description:"Book order",
+      prefill:{name:d.name,email:d.email,contact:d.phone},theme:{color:"#3b1d5a"},
+      handler:async r=>{
+        const v=await(await fetch("/.netlify/functions/verify-payment",{method:"POST",body:JSON.stringify(r)})).json();
+        if(v.ok){
+          toForm("order",{...d,items:items.map(i=>books.find(b=>b.id===i.id).t+" x"+i.qty).join(", "),amount:o.amount/100,payment_id:r.razorpay_payment_id,order_id:r.razorpay_order_id,uid:user.uid,note:v.oversold?"OVERSOLD: stock ran out just before this order was confirmed. Refund or arrange a restock.":""});
+          cart={};coupon=null;upd();closeCheckout();
+          alert(v.oversold?"Payment received. Order ID: "+r.razorpay_order_id+". One book had just sold out, so we will contact you shortly to arrange it or refund you.":"Payment successful! Order ID: "+r.razorpay_order_id);
+        }else alert("We could not verify the payment. Please contact us on WhatsApp.");
+      }});
+    rzp.on("payment.failed",e=>alert("Payment failed: "+e.error.description));
+    rzp.open();
+  }catch(e){alert(e.message)}finally{btn.disabled=false}
+}
+initAuth();
+</script>
+</body>
+</html>
