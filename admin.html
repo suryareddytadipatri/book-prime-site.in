@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Stock Manager · Book Prime.in India</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff8f1;--green:#3b1d5a;--amber:#ff6b35;--text:#24162f;--muted:#6b5f76;--line:#efdfd0}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 80px}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+h1{font-family:'Fraunces',serif;font-size:1.6em;flex:1}
+.who{color:var(--muted);font-size:.9em}
+button{font:inherit;cursor:pointer;border:0;border-radius:99px;padding:10px 18px;font-weight:600;background:var(--green);color:#fff}
+button.ghost{background:#fff;color:var(--text);border:1px solid var(--line)}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px}
+#login{text-align:center;margin-top:12vh}#login p{color:var(--muted);margin:8px 0 20px}
+.note{background:#fff;border-left:4px solid var(--amber);padding:12px 16px;border-radius:8px;margin-bottom:18px;color:var(--muted);font-size:.92em}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+.nm small{display:block;color:var(--muted)}
+.pill{font-size:.8em;font-weight:700;padding:5px 12px;border-radius:99px;white-space:nowrap}
+.pill.live{background:#dcfce7;color:#166534}.pill.low{background:#fef3c7;color:#92400e}.pill.out{background:#ffe4e6;color:#9f1239}
+.ctl{display:flex;gap:8px;align-items:center}
+.ctl input{width:84px;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;text-align:center}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 20px;border-radius:99px;opacity:0;transition:.3s;pointer-events:none}
+#toast.on{opacity:1}
+@media(max-width:620px){.row{grid-template-columns:1fr auto}.ctl{grid-column:1/-1}.ctl input{flex:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>Stock Manager</h1><span class="who" id="who"></span><button class="ghost" id="outBtn" style="display:none" onclick="auth.signOut()">Sign out</button></header>
+
+  <div id="login" class="card" style="display:none">
+    <h2>Owner login</h2><p>Sign in with the owner's Google account to manage stock.</p>
+    <button onclick="signIn()">Continue with Google</button>
+  </div>
+
+  <div id="denied" class="card" style="display:none"><h2>Access denied</h2><p style="color:var(--muted);margin-top:6px">This Google account is not the shop owner. Sign out and use the owner account.</p></div>
+
+  <div id="panel" style="display:none">
+    <div class="note">Set how many copies you have. At <b>0</b> the book shows <b>Sold out</b> on the website; as soon as you save a number above 0, it goes <b>Live</b> again. Changes appear on the shop instantly, with no refresh.</div>
+    <div class="card">
+      <div class="top"><b>Books</b><button onclick="saveAll()">Save all changes</button></div>
+      <div id="rows"></div>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+// Convenience check only. The REAL protection is in firestore.rules (only the owner email can write).
+const OWNER_EMAILS=["bookprime.inindia@gmail.com"];
+// Keep ids/titles in sync with the books list in index.html
+const books=[
+ {id:1,t:"The Midnight Library",a:"Matt Haig"},{id:2,t:"Atomic Habits",a:"James Clear"},
+ {id:3,t:"The Alchemist",a:"Paulo Coelho"},{id:4,t:"Wings of Fire",a:"A.P.J. Abdul Kalam"},
+ {id:5,t:"The Immortals of Meluha",a:"Amish Tripathi"},{id:6,t:"Panchatantra",a:"Vishnu Sharma"},
+ {id:7,t:"Gitanjali",a:"Rabindranath Tagore"},{id:8,t:"India After Gandhi",a:"Ramachandra Guha"}
+];
+const $=id=>document.getElementById(id);
+let auth,db,cur={},unsub=null;
+
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("on"),2600)}
+function show(which){["login","denied","panel"].forEach(k=>$(k).style.display=k===which?"block":"none")}
+
+if(!window.FIREBASE_CONFIG||FIREBASE_CONFIG.apiKey.startsWith("YOUR")){
+  show("login");$("login").innerHTML="<h2>Not set up yet</h2><p>Add your Firebase keys in firebase-config.js first.</p>";
+}else{
+  firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();db=firebase.firestore();
+  build();
+  auth.onAuthStateChanged(u=>{
+    if(unsub){unsub();unsub=null}
+    $("outBtn").style.display=u?"":"none";$("who").textContent=u?u.email:"";
+    if(!u)return show("login");
+    if(!OWNER_EMAILS.includes(u.email))return show("denied");
+    show("panel");
+    unsub=db.collection("stock").onSnapshot(snap=>{cur={};snap.forEach(d=>cur[d.id]=d.data().qty);paint()},e=>toast("Cannot read stock: "+e.message));
+  });
+}
+function signIn(){auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e=>toast(e.message))}
+
+function build(){
+  $("rows").innerHTML=books.map(b=>`<div class="row"><div class="nm"><b>${b.t}</b><small>${b.a}</small></div>
+   <span class="pill" id="p${b.id}"></span>
+   <div class="ctl"><input type="number" min="0" step="1" id="i${b.id}" placeholder="Qty" oninput="this.dataset.d=1">
+   <button onclick="save(${b.id})">Save</button><button class="ghost" onclick="soldOut(${b.id})">Mark sold out</button></div></div>`).join("");
+}
+function paint(){
+  books.forEach(b=>{
+    const q=cur[b.id],p=$("p"+b.id),i=$("i"+b.id);
+    if(q===undefined){p.textContent="Not set · shows Sold out";p.className="pill out"}
+    else if(q===0){p.textContent="Sold out";p.className="pill out"}
+    else if(q<=3){p.textContent="Low · "+q+" left";p.className="pill low"}
+    else{p.textContent="Live · "+q+" in stock";p.className="pill live"}
+    if(!i.dataset.d)i.value=q===undefined?"":q;   // don't overwrite a number the owner is typing
+  });
+}
+function valid(v){const n=Number(v);return v!==""&&Number.isInteger(n)&&n>=0&&n<=100000?n:null}
+async function save(id){
+  const i=$("i"+id),n=valid(i.value);
+  if(n===null)return toast("Enter a whole number (0 or more)");
+  try{await db.collection("stock").doc(String(id)).set({qty:n},{merge:true});delete i.dataset.d;toast("Saved ✓")}
+  catch(e){toast("Could not save: "+e.message)}
+}
+function soldOut(id){$("i"+id).value=0;save(id)}
+async function saveAll(){
+  const b=db.batch();let c=0;
+  for(const k of books){
+    const i=$("i"+k.id);if(!i.dataset.d)continue;
+    const n=valid(i.value);if(n===null)return toast("Check the number for: "+k.t);
+    b.set(db.collection("stock").doc(String(k.id)),{qty:n},{merge:true});c++;
+  }
+  if(!c)return toast("Nothing changed");
+  try{await b.commit();books.forEach(k=>delete $("i"+k.id).dataset.d);toast("Saved "+c+" book"+(c>1?"s":"")+" ✓")}
+  catch(e){toast("Could not save: "+e.message)}
+}
+</script>
+</body>
+</html>
