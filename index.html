@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Book Prime.in India</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#3b1d5a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BookPrime">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fff8f1;--bg2:#fdeedd;--green:#3b1d5a;--amber:#ff6b35;--text:#24162f;--muted:#6b5f76;--line:#efdfd0;--sand:#ffd9c2;--teal:#0f766e}
@@ -28,7 +35,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,248,241,.92);backdro
 .ico{background:none;position:relative;color:var(--text);padding:6px;font-size:1.1em}
 .badge{position:absolute;top:-4px;right:-6px;background:var(--green);color:#fff;font-size:11px;border-radius:99px;min-width:18px;height:18px;display:grid;place-items:center}
 /* hero */
-.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;padding:clamp(40px,7vw,90px) 0;position:relative}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;padding-block:clamp(40px,7vw,90px);position:relative}
 .hero:before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,#ffd9c2,transparent 70%);left:-140px;top:-40px;z-index:-1}
 .eyebrow{color:var(--amber);letter-spacing:.18em;font-weight:700;font-size:.8em;text-transform:uppercase;display:inline-block;background:#fff;border:1px solid var(--line);padding:6px 14px;border-radius:99px}
 .hero h1{font-size:clamp(2.3em,5.6vw,4.1em);line-height:1.1;margin:20px 0}
@@ -58,7 +65,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,248,241,.92);backdro
 .track span:after{content:"✦";color:var(--green);margin-left:44px}
 @keyframes mq{to{transform:translateX(-50%)}}
 /* books */
-#books{padding:64px 0 40px}
+#books{padding-block:64px 40px}
 #books h2{font-size:clamp(1.8em,4vw,2.5em);margin-bottom:6px}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:16px 0 22px}
 .chip{background:#fff;border:1px solid var(--line);color:var(--text);padding:8px 18px;border-radius:99px;white-space:nowrap;font-weight:500}
@@ -79,7 +86,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,248,241,.92);backdro
 .feat:hover{transform:translateY(-6px);box-shadow:0 16px 30px rgba(59,29,90,.12)}
 .feat i{background:linear-gradient(135deg,var(--amber),#ff3d71);color:#fff;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;margin-bottom:16px}
 .feat h3{font-size:1.25em;margin-bottom:6px}.feat p{color:var(--muted)}
-#about{padding:56px 0 64px;text-align:center}#about p{max-width:42em;margin:12px auto 0;color:var(--muted)}
+#about{padding-block:56px 64px;text-align:center}#about p{max-width:42em;margin:12px auto 0;color:var(--muted)}
 /* footer */
 footer{background:var(--green);color:#e9efe9;padding-top:56px}
 .fgrid2{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:40px;padding-bottom:40px}
@@ -126,6 +133,18 @@ footer a:hover{color:var(--amber)}
  .links{display:none}.search{width:auto;flex:1}.grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:560px){.fgrid2{grid-template-columns:1fr}.logo span{font-size:.9em}.wa b{display:none}.qwrap{padding-left:12px}}
+@media(max-width:560px){.nav{gap:8px}.logo{font-size:1.2em;gap:8px}.logo i{width:32px;height:32px}.search{padding:8px 10px;min-width:0}.badge{right:-3px}}
+.ibar{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;padding:10px 16px;background:var(--green);color:#fff;font-size:.92em;text-align:center}
+.ibar .btn{padding:6px 18px;background:var(--amber);font-size:.95em}.ibar .x{color:#fff;opacity:.8}
+.gate{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:24px;background:linear-gradient(160deg,#3b1d5a,#24162f 70%);color:#fff;text-align:center}
+.gate[hidden],.ibar[hidden]{display:none}
+.gbox{width:min(380px,100%);display:flex;flex-direction:column;gap:14px;align-items:center}
+.glogo{width:84px;height:84px;border-radius:22px;background:#fff1e8;color:var(--amber);display:grid;place-items:center;box-shadow:0 14px 30px rgba(0,0,0,.35)}
+.glogo svg{width:46px;height:46px}
+.gbox h1{font-size:1.9em;line-height:1.2}.gbox p{opacity:.85}
+.gbox .btn{background:#fff;color:var(--text);margin-top:6px}.gbox .btn[hidden]{display:none}
+.gbox small{opacity:.65;font-size:.8em;max-width:30em}
+body.locked{overflow:hidden}
 </style>
 </head>
 <body>
@@ -157,6 +176,7 @@ footer a:hover{color:var(--amber)}
   <button class="ico" aria-label="Wishlist" onclick="view('wish');location.hash='books'"><svg><use href="#i-heart"/></svg><span class="badge" id="wcnt">0</span></button>
   <button class="ico" aria-label="Cart" onclick="toggle()"><svg><use href="#i-cart"/></svg><span class="badge" id="cnt">0</span></button>
 </div></header>
+<div id="ibar" class="ibar" hidden><span id="itxt"></span><button class="btn" id="ibtn" hidden>Install</button><button class="x" aria-label="Close" onclick="hideInstall(true)">✕</button></div>
 
 <main id="top">
 <section class="wrap hero">
@@ -223,6 +243,16 @@ footer a:hover{color:var(--amber)}
   <h3>Total: ₹<span id="total">0</span></h3>
   <button class="btn full" onclick="goCheckout()">Checkout</button>
 </aside>
+
+<div id="gate" class="gate" hidden>
+  <div class="gbox">
+    <div class="glogo"><svg><use href="#i-book"/></svg></div>
+    <h1>Book Prime.in India</h1>
+    <p id="gmsg">Log in to start shopping.</p>
+    <button class="btn full" id="gbtn" onclick="gLogin()">Continue with Google</button>
+    <small>We share your name and email with the shop so we can handle your orders.</small>
+  </div>
+</div>
 
 <div id="lmodal" class="modal"><div class="mbox">
   <button class="x close" onclick="closeLogin()">✕</button>
@@ -344,13 +374,15 @@ let auth=null,user=null,pendingCheckout=false,confirmRes=null,coupon=null;
 function initAuth(){
   if(!window.FIREBASE_CONFIG||FIREBASE_CONFIG.apiKey.startsWith("YOUR")||!window.firebase)return;
   firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();
+  if(needGate()){$("gate").hidden=false;document.body.classList.add("locked");$("gmsg").textContent="Loading…";$("gbtn").hidden=true}
+  auth.getRedirectResult().then(r=>{if(r&&r.user)loginDone(r.user,"google")}).catch(()=>{});
   // Live stock: updates the page instantly when the owner changes a quantity
   firebase.firestore().collection("stock").onSnapshot(snap=>{
     stock={};books.forEach(b=>stock[b.id]=0);snap.forEach(d=>stock[+d.id]=d.data().qty||0);
     Object.keys(cart).forEach(id=>{const n=stock[id]??0;if(cart[id]>n){n?cart[id]=n:delete cart[id]}});
     render();upd();if($("co").classList.contains("open"))sumUpd();
   },e=>console.log("stock error",e));
-  auth.onAuthStateChanged(u=>{user=u;$("acctName").textContent=u?(u.displayName||"Account").split(" ")[0]:"Login"});
+  auth.onAuthStateChanged(u=>{user=u;$("acctName").textContent=u?(u.displayName||"Account").split(" ")[0]:"Login";gateUpdate(u)});
 }
 function needCfg(){alert("Login is not set up yet. Add your Firebase keys in firebase-config.js.")}
 function acctClick(){user?(confirm("Log out?")&&auth.signOut()):openLogin()}
@@ -358,7 +390,13 @@ function openLogin(){$("lmodal").classList.add("open")}
 function closeLogin(){$("lmodal").classList.remove("open")}
 async function gLogin(){
   if(!auth)return needCfg();
-  try{const r=await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());loginDone(r.user,"google")}catch(e){alert(e.message)}
+  const prov=new firebase.auth.GoogleAuthProvider();
+  try{const r=await auth.signInWithPopup(prov);loginDone(r.user,"google")}
+  catch(e){
+    if(e.code==="auth/popup-closed-by-user"||e.code==="auth/cancelled-popup-request")return;
+    if(e.code==="auth/popup-blocked"||e.code==="auth/operation-not-supported-in-this-environment"){
+      try{await auth.signInWithRedirect(prov)}catch(e2){alert(e2.message)}return}
+    alert(e.message)}
 }
 async function sendOtp(){
   if(!auth)return needCfg();
@@ -445,6 +483,33 @@ async function pay(){
     rzp.open();
   }catch(e){alert(e.message)}finally{btn.disabled=false}
 }
+/* ===== Install as an app + login-first screen ===== */
+const REQUIRE_LOGIN_IN_BROWSER=false; // true = ask everyone to log in first, even in a normal browser tab
+const isApp=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+const needGate=()=>!!auth&&(isApp()||REQUIRE_LOGIN_IN_BROWSER);
+function gateUpdate(u){
+  if(!needGate()||u){$("gate").hidden=true;document.body.classList.remove("locked");return}
+  $("gate").hidden=false;document.body.classList.add("locked");
+  $("gmsg").textContent="Log in to start shopping.";$("gbtn").hidden=false;
+}
+let dip=null;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;
+function showInstall(){
+  if(isApp())return;
+  try{if(localStorage.getItem("bp_no_install"))return}catch(e){}
+  $("itxt").textContent=dip?"Install Book Prime on your phone for faster shopping":"To install: tap Share, then Add to Home Screen";
+  $("ibtn").hidden=!dip;$("ibar").hidden=false;
+}
+function hideInstall(forever){
+  $("ibar").hidden=true;
+  if(forever)try{localStorage.setItem("bp_no_install","1")}catch(e){}
+}
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();dip=e;showInstall()});
+addEventListener("appinstalled",()=>{dip=null;hideInstall(false)});
+$("ibtn").onclick=async()=>{if(!dip)return;dip.prompt();try{await dip.userChoice}catch(e){}dip=null;hideInstall(false)};
+if(isIOS&&!isApp())showInstall();
+if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+
 initAuth();
 </script>
 </body>
