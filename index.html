@@ -424,7 +424,7 @@ function toForm(name,data){
 function goCheckout(){
   if(!Object.keys(cart).length)return alert("Your cart is empty");
   toggle();
-  if(!user){pendingCheckout=true;return openLogin()}
+  if(!user){pendingCheckout=true;return needGate()?gateUpdate(null):openLogin()} // normally never reached: the login page already ran
   openCheckout();
 }
 function openCheckout(){
@@ -460,7 +460,7 @@ function sumUpd(){
 
 /* ===== Payment (order is created & verified on the server) ===== */
 async function pay(){
-  if(!user)return openLogin();
+  if(!user)return needGate()?gateUpdate(null):openLogin();
   const d={email:$("cEmail").value.trim(),name:$("cName").value.trim(),state:$("cState").value,addr:$("cAddr").value.trim(),pin:$("cPin").value.trim(),phone:$("cPhone").value.trim()};
   if(!/^\S+@\S+\.\S+$/.test(d.email)||!d.name||!d.state||!d.addr||!/^\d{6}$/.test(d.pin)||!/^[6-9]\d{9}$/.test(d.phone))
     return alert("Please fill in all delivery details correctly");
@@ -484,7 +484,7 @@ async function pay(){
   }catch(e){alert(e.message)}finally{btn.disabled=false}
 }
 /* ===== Install as an app + login-first screen ===== */
-const REQUIRE_LOGIN_IN_BROWSER=false; // true = ask everyone to log in first, even in a normal browser tab
+const REQUIRE_LOGIN_IN_BROWSER=true; // true = everyone sees the login page first (app and browser). false = login page only inside the installed app
 const isApp=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
 const needGate=()=>!!auth&&(isApp()||REQUIRE_LOGIN_IN_BROWSER);
 function gateUpdate(u){
