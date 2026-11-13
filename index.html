@@ -294,7 +294,7 @@ body.locked{overflow:hidden}
 <script>
 
 const books=[
- {id:1,t:"The Midnight Library",a:"Matt Haig",c:"Fiction",p:399,col:"#3b1d5a"},
+ {id:1,t:"The Midnight Library",a:"Matt Haig",c:"Fiction",p:10,col:"#3b1d5a"},
  {id:2,t:"Atomic Habits",a:"James Clear",c:"Self-Help",p:499,col:"#c2410c"},
  {id:3,t:"The Alchemist",a:"Paulo Coelho",c:"Fiction",p:299,col:"#be185d"},
  {id:4,t:"Wings of Fire",a:"A.P.J. Abdul Kalam",c:"Biographies",p:250,col:"#1d4ed8"},
@@ -365,7 +365,7 @@ $("qcard").addEventListener("mouseleave",startQ);
 
 /* ===== Config (keep PRICES/COUPONS/SHIPPING in sync with netlify/functions/create-order.js) ===== */
 const COUPONS={WELCOME10:10};
-const SHIPPING={name:"Standard delivery (3–7 days)",fee:50};
+const SHIPPING={name:"Standard delivery (3–7 days)",fee:10};
 const STATES=["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Andaman and Nicobar Islands","Chandigarh","Dadra and Nagar Haveli and Daman and Diu","Delhi","Jammu and Kashmir","Ladakh","Lakshadweep","Puducherry"];
 $("cState").innerHTML='<option value="">State</option>'+STATES.map(x=>`<option>${x}</option>`).join("");
 
