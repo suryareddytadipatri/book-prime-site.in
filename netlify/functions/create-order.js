@@ -1,6 +1,6 @@
 // Creates a Razorpay order. Amount is calculated HERE, never trusted from the browser.
 const { db } = require("../lib/db");
-const PRICES = {1:399,2:499,3:299,4:250,5:299,6:199,7:225,8:699}; // same ids/prices as the books list in index.html
+const PRICES = {1:10,2:499,3:299,4:250,5:299,6:199,7:225,8:699}; // same ids/prices as the books list in index.html
 const COUPONS = { WELCOME10: 10 };
 const SHIPPING_FEE = 50;
  
