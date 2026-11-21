@@ -59,13 +59,14 @@ button.ghost{background:#fff;color:var(--text);border:1px solid var(--line)}
 <script src="firebase-config.js"></script>
 <script>
 // Convenience check only. The REAL protection is in firestore.rules (only the owner email can write).
-const OWNER_EMAILS=["suryaprakashreddy.tadipatri@gmail.com"];
+const OWNER_EMAILS=["bookprime.inindia@gmail.com"];
 // Keep ids/titles in sync with the books list in index.html
 const books=[
  {id:1,t:"The Midnight Library",a:"Matt Haig"},{id:2,t:"Atomic Habits",a:"James Clear"},
  {id:3,t:"The Alchemist",a:"Paulo Coelho"},{id:4,t:"Wings of Fire",a:"A.P.J. Abdul Kalam"},
  {id:5,t:"The Immortals of Meluha",a:"Amish Tripathi"},{id:6,t:"Panchatantra",a:"Vishnu Sharma"},
- {id:7,t:"Gitanjali",a:"Rabindranath Tagore"},{id:8,t:"India After Gandhi",a:"Ramachandra Guha"}
+ {id:7,t:"Gitanjali",a:"Rabindranath Tagore"},{id:8,t:"India After Gandhi",a:"Ramachandra Guha"},
+ {id:9,t:"Pride and Prejudice",a:"Jane Austen"},{id:10,t:"Rich Dad Poor Dad",a:"Robert Kiyosaki"}
 ];
 const $=id=>document.getElementById(id);
 let auth,db,cur={},unsub=null;
