@@ -205,6 +205,30 @@ footer h4{color:#94a3b8}.copy{color:#94a3b8}
 .ocall{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1b1305}
 .owa{background:rgba(37,211,102,.14);color:#4ade80;border:1px solid rgba(37,211,102,.45)}
 @media(max-width:640px){.ownercard{grid-template-columns:1fr;justify-items:center;text-align:center;padding:30px 20px;gap:20px}.ophoto{width:124px;height:124px}.ocontacts{justify-content:center}}
+
+/* ===== v5: polished header ===== */
+header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px solid rgba(251,191,36,.16);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.nav{height:74px;gap:22px}
+.links{gap:2px}.links a{white-space:nowrap;position:relative;padding:10px 16px;border-radius:10px;color:#b4bfd6;font-weight:600;font-size:.95em;transition:color .2s}
+.links a:hover{background:rgba(255,255,255,.05);color:#fff}.links a.on{background:none;color:#fff}
+.links a.on:after{content:"";position:absolute;left:16px;right:16px;bottom:2px;height:3px;border-radius:3px;background:linear-gradient(90deg,#fbbf24,#ff6b35)}
+.search{flex:1;max-width:420px;width:auto;margin:0 auto;padding:11px 18px;border-radius:99px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);transition:.2s}
+.search:focus-within{border-color:#fbbf24;box-shadow:0 0 0 4px rgba(251,191,36,.14);background:rgba(255,255,255,.1)}
+.ico{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;border-radius:99px;padding:9px 12px;font-weight:600;font-size:.95em;transition:background .2s}
+.ico:hover{background:rgba(255,255,255,.08)}
+.ord span,.clab{display:none}
+.acct{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:5px 16px 5px 6px}
+.acct span{max-width:110px;overflow:hidden;text-overflow:ellipsis;font-size:.92em}
+.av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#ff6b35);color:#1b1305;display:grid;place-items:center;font-style:normal;flex:none}
+.av svg{width:1.1em;height:1.1em}.av b{font-size:.95em;font-weight:800}
+.cartb{border:1px solid rgba(251,191,36,.55);background:rgba(251,191,36,.1);color:#fde68a;padding:9px 16px}
+.cartb:hover{background:rgba(251,191,36,.2)}
+.badge{top:-7px;right:-7px;border:2px solid #090e1b}
+.acw{position:relative}.acm{position:absolute;right:0;top:calc(100% + 10px);min-width:200px;background:#121a30;border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:6px;box-shadow:0 20px 44px rgba(0,0,0,.55);z-index:25}.acm[hidden]{display:none}
+.acm button{display:flex;gap:10px;align-items:center;width:100%;padding:11px 14px;border-radius:10px;background:none;color:var(--text);font-weight:600;text-align:left}.acm button:hover{background:rgba(255,255,255,.08)}
+@media(min-width:1100px){.clab{display:inline}}
+@media(max-width:900px){.nav{gap:10px;height:66px}.search{max-width:none;padding:9px 14px}.ico{padding:8px}.acct{padding:4px 12px 4px 4px}.cartb{padding:8px 11px}}
+@media(max-width:560px){.nav{gap:6px}.acct{padding:3px;border:0;background:none}.acct span{display:none}.av{width:30px;height:30px}.search{padding:8px 10px}.search svg{display:none}.ico{padding:6px}.cartb{border:0;background:none;padding:6px;color:var(--text)}.logo span{font-size:.85em}}
 #omodal{background:rgba(5,8,20,.72)}
 .obox{background:linear-gradient(160deg,#0f172a,#1a1636 80%);color:#fff;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 70px rgba(0,0,0,.5);width:min(620px,100%)}
 .obox h2{font-family:'Fraunces',serif;font-size:1.7em;background:linear-gradient(90deg,#fff,#fbbf24);-webkit-background-clip:text;background-clip:text;color:transparent;width:max-content;max-width:100%}
@@ -237,15 +261,13 @@ footer h4{color:#94a3b8}.copy{color:#94a3b8}
   <nav class="links">
     <a href="#top" class="on" id="nHome" onclick="view('all')">Home</a>
     <a href="#books" onclick="view('all')">Books</a>
-    <a href="#books" onclick="view('wish')">Wishlist</a>
     <a href="#about">About</a>
-    <a href="#" id="nOrd" hidden onclick="openOrders();return false">My Orders</a>
   </nav>
   <label class="search"><svg><use href="#i-search"/></svg><input id="q" placeholder="Search books, authors…"></label>
-  <button class="ico acct" aria-label="Login" onclick="acctClick()"><svg><use href="#i-user"/></svg><span id="acctName">Login</span></button>
-  <button class="ico" id="ordBtn" hidden aria-label="My orders" title="My orders" onclick="openOrders()"><svg><use href="#i-box"/></svg></button>
+  <div class="acw"><button class="ico acct" aria-label="Account" onclick="acctClick(event)"><i class="av"><svg id="acIco"><use href="#i-user"/></svg><b id="acIni" hidden></b></i><span id="acctName">Login</span></button>
+  <div class="acm" id="acMenu" hidden><button onclick="acMenuClose();openOrders()"><svg><use href="#i-box"/></svg>My Orders</button><button onclick="acMenuClose();confirm('Log out?')&&auth.signOut()"><svg><use href="#i-user"/></svg>Log out</button></div></div>
   <button class="ico" aria-label="Wishlist" onclick="view('wish');location.hash='books'"><svg><use href="#i-heart"/></svg><span class="badge" id="wcnt">0</span></button>
-  <button class="ico" aria-label="Cart" onclick="toggle()"><svg><use href="#i-cart"/></svg><span class="badge" id="cnt">0</span></button>
+  <button class="ico cartb" aria-label="Cart" onclick="toggle()"><svg><use href="#i-cart"/></svg><span class="clab">Cart</span><span class="badge" id="cnt">0</span></button>
 </div></header>
 <div id="ibar" class="ibar" hidden><span id="itxt"></span><button class="btn" id="ibtn" hidden>Install</button><button class="x" aria-label="Close" onclick="hideInstall(true)">✕</button></div>
 
@@ -392,7 +414,9 @@ const books=[
  {id:5,img:"images/book-5.jpg",t:"The Immortals of Meluha",a:"Amish Tripathi",c:"Mythology",p:299,col:"#7c3aed"},
  {id:6,img:"images/book-6.jpg",t:"Panchatantra",a:"Vishnu Sharma",c:"Children",p:199,col:"#d97706"},
  {id:7,img:"images/book-7.jpg",t:"Gitanjali",a:"Rabindranath Tagore",c:"Poetry",p:225,col:"#0f766e"},
- {id:8,img:"images/book-8.jpg",t:"India After Gandhi",a:"Ramachandra Guha",c:"History",p:699,col:"#44403c"}
+ {id:8,img:"images/book-8.jpg",t:"India After Gandhi",a:"Ramachandra Guha",c:"History",p:699,col:"#44403c"},
+ {id:9,img:"images/book-9.jpg",t:"Pride and Prejudice",a:"Jane Austen",c:"Classics",p:199,col:"#0e7490"},
+ {id:10,img:"images/book-10.jpg",t:"Rich Dad Poor Dad",a:"Robert Kiyosaki",c:"Self-Help",p:349,col:"#b45309"}
 ];
 const catList=["Children","Classics","Fiction","Mythology","Self-Help","Biographies","Poetry","History"];
 let cat="All",mode="all",cart={},wish=new Set();
@@ -474,10 +498,12 @@ function initAuth(){
     Object.keys(cart).forEach(id=>{const n=stock[id]??0;if(cart[id]>n){n?cart[id]=n:delete cart[id]}});
     render();upd();if($("co").classList.contains("open"))sumUpd();
   },e=>console.log("stock error",e));
-  auth.onAuthStateChanged(u=>{user=u;$("ordBtn").hidden=!u;$("nOrd").hidden=!u;$("acctName").textContent=u?(u.displayName||"Account").split(" ")[0]:"Login";gateUpdate(u)});
+  auth.onAuthStateChanged(u=>{user=u;$("acIni").hidden=!u;$("acIco").style.display=u?"none":"";$("acIni").textContent=u?String(u.displayName||u.email||"A").trim().charAt(0).toUpperCase():"";$("acctName").textContent=u?(u.displayName||"Account").split(" ")[0]:"Login";gateUpdate(u)});
 }
 function needCfg(){alert("Login is not set up yet. Add your Firebase keys in firebase-config.js.")}
-function acctClick(){user?(confirm("Log out?")&&auth.signOut()):openLogin()}
+function acMenuClose(){$("acMenu").hidden=true}
+function acctClick(e){if(!user)return openLogin();if(e)e.stopPropagation();$("acMenu").hidden=!$("acMenu").hidden}
+document.addEventListener("click",e=>{if(!e.target.closest(".acw"))acMenuClose()});
 const esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function closeOrders(){$("omodal").classList.remove("open")}
 async function openOrders(){
