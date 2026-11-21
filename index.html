@@ -102,7 +102,7 @@ footer li{list-style:none;margin-bottom:10px}footer ul{padding:0}
 footer a:hover{color:var(--amber)}
 .crow{display:flex;gap:10px;align-items:center}
 .copy{border-top:1px solid rgba(255,255,255,.15);text-align:center;padding:18px 20px;font-size:.9em;color:#c4d3c9}
-.wa{position:fixed;right:18px;bottom:18px;z-index:15;background:#25d366;color:#fff;border-radius:99px;padding:12px 16px;display:flex;gap:8px;align-items:center;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.wa{position:fixed;left:18px;bottom:18px;z-index:15;background:#25d366;color:#fff;border-radius:99px;padding:12px 16px;display:flex;gap:8px;align-items:center;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,.25)}
 /* drawer */
 #shade{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.3s;z-index:30}
 #shade.open{opacity:1;pointer-events:auto}
@@ -151,6 +151,67 @@ footer a:hover{color:var(--amber)}
 .gbox .btn{background:#fff;color:var(--text);margin-top:6px}.gbox .btn[hidden]{display:none}
 .gbox small{opacity:.65;font-size:.8em;max-width:30em}
 body.locked{overflow:hidden}
+
+/* ===== v3: smaller book cards, logo boxes, owner card, dark My Orders ===== */
+.grid{grid-template-columns:repeat(5,1fr);gap:16px}.cover{font-size:1em;padding:10px}.info{padding:10px;gap:3px}.info .btn{padding:8px;font-size:.88em}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr);gap:12px}}
+@media(max-width:560px){.grid{grid-template-columns:repeat(3,1fr);gap:8px}.cover{font-size:.68em;padding:6px}.info{padding:7px;gap:2px}.info strong{font-size:.76em;min-height:2.6em;line-height:1.3}.info small{display:none}.price{font-size:.8em}.info .btn{padding:6px 2px;font-size:.7em}.heart{width:26px;height:26px;top:5px;right:5px}.heart svg{width:.9em;height:.9em}.tag{font-size:.6em;padding:3px 7px;top:5px;left:5px}}
+
+/* ===== v4: dark theme (navy + gold), B/P logo, owner card ===== */
+:root{--bg:#0b1220;--bg2:#17213d;--text:#eef2ff;--muted:#9aa6c0;--line:rgba(255,255,255,.12);--sand:#1c2744;--gold:#fbbf24;--card:#121a30;color-scheme:dark}
+body{background:radial-gradient(1100px 560px at 85% -8%,#1b2547 0,transparent 62%),var(--bg)}
+::placeholder{color:#7d89a6}
+.search input,#drawer input,.mbox input,.co input,.co select{color:var(--text)}
+header{background:rgba(11,18,32,.9)}
+.logo i{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1b1305}.logo i svg{width:100%;height:100%}
+.glogo svg{width:60px;height:60px}
+@media(max-width:560px){.logo i{width:34px;height:34px}}
+.search{background:rgba(255,255,255,.06)}
+.badge{background:var(--gold);color:#1b1305}
+.btn{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1b1305}.btn:hover{box-shadow:0 8px 20px rgba(245,158,11,.3)}
+.btn.alt{background:rgba(255,255,255,.07);color:var(--text);border:1px solid var(--line)}
+.btn[disabled]{background:#2b3550;color:#7d89a6}
+.hero:before{background:radial-gradient(circle,rgba(245,158,11,.2),transparent 70%)}
+.eyebrow{background:rgba(255,255,255,.06);color:var(--gold)}
+.qwrap:after{background:var(--card)}.qwrap:before{background:var(--sand)}
+.qcard{box-shadow:0 24px 60px rgba(0,0,0,.55)}
+.sticker{background:var(--bg2);color:var(--text);border-color:var(--line)}
+.chip{background:rgba(255,255,255,.06)}.chip.on{background:var(--gold);color:#1b1305;border-color:var(--gold)}
+.item{background:var(--card)}
+.heart{background:rgba(11,18,32,.78);color:#fff}
+.price{color:var(--gold)}
+.feat{background:var(--card)}.feat:hover{box-shadow:0 16px 36px rgba(0,0,0,.5)}
+footer{background:#070c18;border-top:1px solid var(--line)}
+footer h4{color:#94a3b8}.copy{color:#94a3b8}
+#drawer{background:#0f1730}#drawer input{background:rgba(255,255,255,.06)}
+.mbox{background:var(--card);border:1px solid var(--line)}
+.mbox input,.co input,.co select{background:rgba(255,255,255,.06)}.co select option{background:var(--card);color:var(--text)}
+.co{background:var(--bg)}.coR{background:#0f1730}
+.shipbox{background:rgba(255,255,255,.05)}.shipbox.on{background:var(--bg2);border-color:var(--gold)}
+.gate{background:linear-gradient(160deg,#16213e,#0b1220 70%)}
+.gbox .btn{background:#fff;color:#24162f}
+.ibar{background:#16213e}
+/* owner */
+.owner{padding-block:36px 72px;text-align:center}
+.ownercard{position:relative;overflow:hidden;max-width:780px;margin:24px auto 0;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:center;text-align:left;padding:38px 42px;border-radius:28px;background:linear-gradient(145deg,#16213e,#0e1527);border:1px solid rgba(251,191,36,.28);box-shadow:0 26px 60px rgba(0,0,0,.45)}
+.ownercard:before{content:"";position:absolute;width:340px;height:340px;right:-110px;top:-130px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.22),transparent 70%)}
+.ophoto{position:relative;flex:none;width:150px;height:150px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#fbbf24,#ff6b35);display:grid;place-items:center;color:#1b1305;font:800 2.6em 'Fraunces',serif;border:5px solid #0e1527;box-shadow:0 0 0 3px var(--gold),0 0 0 10px rgba(251,191,36,.14)}
+.ophoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.odet{position:relative}.odet h3{font-size:clamp(1.5em,3vw,2em);line-height:1.2}
+.orole{display:inline-block;margin:10px 0 18px;padding:5px 16px;border-radius:99px;border:1px solid rgba(251,191,36,.45);color:var(--gold);font-weight:600;font-size:.88em;letter-spacing:.04em}
+.ocontacts{display:flex;gap:12px;flex-wrap:wrap}
+.ocall,.owa{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:99px;font-weight:700}
+.ocall{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1b1305}
+.owa{background:rgba(37,211,102,.14);color:#4ade80;border:1px solid rgba(37,211,102,.45)}
+@media(max-width:640px){.ownercard{grid-template-columns:1fr;justify-items:center;text-align:center;padding:30px 20px;gap:20px}.ophoto{width:124px;height:124px}.ocontacts{justify-content:center}}
+#omodal{background:rgba(5,8,20,.72)}
+.obox{background:linear-gradient(160deg,#0f172a,#1a1636 80%);color:#fff;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 70px rgba(0,0,0,.5);width:min(620px,100%)}
+.obox h2{font-family:'Fraunces',serif;font-size:1.7em;background:linear-gradient(90deg,#fff,#fbbf24);-webkit-background-clip:text;background-clip:text;color:transparent;width:max-content;max-width:100%}
+.obox .close{color:#fff;opacity:.8}.obox .empty{color:#9ca3b8}
+.obox .ocard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 18px}
+.obox .ocard .oh{color:#9ca3b8}.obox .ocard .it{color:#e5e7f2;line-height:1.7}.obox .ocard .tot{color:#fbbf24;font-size:1.1em}
+.obox .ocard .os{background:rgba(74,222,128,.14);color:#4ade80}
 </style>
 </head>
 <body>
@@ -158,6 +219,7 @@ body.locked{overflow:hidden}
 <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
 <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6c-1.5-1.3-3.6-2-6-2H3v14h3c2.4 0 4.5.7 6 2 1.5-1.3 3.6-2 6-2h3V4h-3c-2.4 0-4.5.7-6 2zM12 6v14"/></symbol>
 <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/></symbol>
+<symbol id="i-bp" viewBox="0 0 36 36"><path d="M18 9.5C14.5 7.6 10 7.4 6 8.6v17.8c4-1.2 8.5-1 12 .9 3.5-1.9 8-2.1 12-.9V8.6c-4-1.2-8.5-1-12 .9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M18 9.5v17.8" fill="none" stroke="currentColor" stroke-width="1.3"/><text x="12" y="21.6" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-weight="800" font-size="9.5" fill="currentColor" stroke="none">B</text><text x="24" y="21.6" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-weight="800" font-size="9.5" fill="currentColor" stroke="none">P</text></symbol>
 <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></symbol>
 <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.4a1 1 0 0 0 1 .8h9.1a1 1 0 0 0 1-.8L20.5 8H6"/></symbol>
 <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
@@ -171,7 +233,7 @@ body.locked{overflow:hidden}
 </defs></svg>
 
 <header><div class="wrap nav">
-  <a class="logo" href="#top"><i><svg><use href="#i-book"/></svg></i><span>BookPrime</span></a>
+  <a class="logo" href="#top"><i><svg><use href="#i-bp"/></svg></i><span>BookPrime</span></a>
   <nav class="links">
     <a href="#top" class="on" id="nHome" onclick="view('all')">Home</a>
     <a href="#books" onclick="view('all')">Books</a>
@@ -225,11 +287,25 @@ body.locked{overflow:hidden}
   <h2 style="font-size:clamp(1.8em,4vw,2.5em);margin-top:8px">A Hyderabad bookstore for readers everywhere</h2>
   <p>Book Prime.in India brings handpicked Indian and international titles to readers across the country, at honest prices and with careful packing. Write to us on WhatsApp for recommendations or bulk orders.</p>
 </section>
+<section id="owner" class="wrap owner">
+  <div class="eyebrow">Meet the Owner</div>
+  <div class="ownercard">
+    <div class="ophoto"><span>RT</span><img src="images/owner.jpg" alt="Ravindra Reddy Tadipatri" onerror="this.remove()"></div>
+    <div class="odet">
+      <h3>Ravindra Reddy Tadipatri</h3>
+      <p class="orole">Owner · Bookprime.in</p>
+      <div class="ocontacts">
+        <a class="ocall" href="tel:+917997555414"><svg><use href="#i-phone"/></svg>+91 79975 55414</a>
+        <a class="owa" href="https://wa.me/917997555414?text=Hi%20Book%20Prime.in%20India" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer>
   <div class="wrap fgrid2">
-    <div><a class="logo" href="#top"><svg><use href="#i-book"/></svg>BookPrime</a><p>India's neighbourhood online bookstore — handpicked titles, honest prices in ₹, delivered to your door.</p></div>
+    <div><a class="logo" href="#top"><i><svg><use href="#i-bp"/></svg></i>BookPrime</a><p>India's neighbourhood online bookstore — handpicked titles, honest prices in ₹, delivered to your door.</p></div>
     <div><h4>EXPLORE</h4><ul>
       <li><a href="#books" onclick="view('all')">All Books</a></li>
       <li><a href="#books" onclick="view('wish')">Wishlist</a></li>
@@ -255,7 +331,7 @@ body.locked{overflow:hidden}
 
 <div id="gate" class="gate" hidden>
   <div class="gbox">
-    <div class="glogo"><svg><use href="#i-book"/></svg></div>
+    <div class="glogo"><svg><use href="#i-bp"/></svg></div>
     <h1>Book Prime.in India</h1>
     <p id="gmsg">Log in to start shopping.</p>
     <button class="btn full" id="gbtn" onclick="gLogin()">Continue with Google</button>
