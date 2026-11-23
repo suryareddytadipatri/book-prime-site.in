@@ -1,6 +1,6 @@
 // Creates a Razorpay order. Amount is calculated HERE, never trusted from the browser.
 const { db, auth: fbAuth } = require("../lib/db");
-const PRICES = {1:399,2:499,3:299,4:250,5:299,6:20,7:225,8:699,9:199,10:349}; // same ids/prices as the books list in index.html
+const DEFAULT_BOOKS = require("../../books-data.js"); // starter catalogue; prices the owner saved in admin (Firestore "books") override these
 const COUPONS = { WELCOME10: 10 };
 const SHIPPING_FEE = 50;
 
@@ -15,6 +15,16 @@ exports.handler = async (event) => {
     catch (e) { console.error("verifyIdToken failed:", e.code, e.message); return reply(401, { error: "Login check failed (" + (e.code || "error") + "): " + String(e.message || "").slice(0, 140) }); }
     if (!Array.isArray(items) || !items.length) return reply(400, { error: "Invalid cart" });
     // Merge repeated ids so the same book can't be counted twice to get past the stock check
+    const ids = [...new Set(items.map((i) => Number(i.id)))];
+    if (ids.length > 60 || ids.some((n) => !Number.isInteger(n))) return reply(400, { error: "Invalid cart" });
+    const bsnaps = await db.getAll(...ids.map((n) => db.collection("books").doc(String(n))));
+    const PRICES = {};
+    ids.forEach((n, k) => {
+      const d = DEFAULT_BOOKS.find((b) => b.id === n);
+      const live = bsnaps[k].exists ? bsnaps[k].data() : null;
+      const src = live || d;   // owner's saved book wins over the starter list
+      if (src && src.on !== false && Number(src.p) > 0) PRICES[n] = Math.round(Number(src.p));
+    });
     const merged = {};
     let sub = 0;
     for (const i of items) {
