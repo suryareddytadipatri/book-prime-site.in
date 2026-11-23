@@ -4,126 +4,155 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Stock Manager · Book Prime.in India</title>
+<title>Admin · Book Prime.in India</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fff8f1;--green:#3b1d5a;--amber:#ff6b35;--text:#24162f;--muted:#6b5f76;--line:#efdfd0}
 *{box-sizing:border-box;margin:0}
 body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
-.wrap{max-width:860px;margin:0 auto;padding:20px 16px 80px}
-header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
-h1{font-family:'Fraunces',serif;font-size:1.6em;flex:1}
-.who{color:var(--muted);font-size:.9em}
-button{font:inherit;cursor:pointer;border:0;border-radius:99px;padding:10px 18px;font-weight:600;background:var(--green);color:#fff}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 80px}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-family:'Fraunces',serif;font-size:1.6em;flex:1}.who{color:var(--muted);font-size:.9em}
+button{font:inherit;cursor:pointer;border:0;border-radius:99px;padding:9px 16px;font-weight:600;background:var(--green);color:#fff}
 button.ghost{background:#fff;color:var(--text);border:1px solid var(--line)}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
 #login{text-align:center;margin-top:12vh}#login p{color:var(--muted);margin:8px 0 20px}
-.note{background:#fff;border-left:4px solid var(--amber);padding:12px 16px;border-radius:8px;margin-bottom:18px;color:var(--muted);font-size:.92em}
-.row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
-.row:last-child{border:0}
-.nm small{display:block;color:var(--muted)}
-.pill{font-size:.8em;font-weight:700;padding:5px 12px;border-radius:99px;white-space:nowrap}
-.pill.live{background:#dcfce7;color:#166534}.pill.low{background:#fef3c7;color:#92400e}.pill.out{background:#ffe4e6;color:#9f1239}
-.ctl{display:flex;gap:8px;align-items:center}
-.ctl input{width:84px;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;text-align:center}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
-#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 20px;border-radius:99px;opacity:0;transition:.3s;pointer-events:none}
+.note{background:#fff;border-left:4px solid var(--amber);padding:12px 16px;border-radius:8px;margin-bottom:16px;color:var(--muted);font-size:.92em}
+input,select{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;width:100%;background:#fff;color:var(--text)}
+label{font-size:.78em;color:var(--muted);font-weight:600;display:block;margin-bottom:3px}
+.f{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;align-items:end}
+.f .w2{grid-column:span 2}.f .w3{grid-column:span 3}
+.row{border-top:1px solid var(--line);padding:14px 0}
+.row .f{grid-template-columns:2fr 1.4fr 1.2fr .8fr .8fr}
+.row .f2{display:grid;grid-template-columns:3fr auto auto auto auto;gap:10px;align-items:center;margin-top:10px}
+.pill{font-size:.75em;font-weight:700;padding:4px 10px;border-radius:99px;white-space:nowrap}
+.pill.live{background:#dcfce7;color:#166534}.pill.low{background:#fef3c7;color:#92400e}.pill.out{background:#ffe4e6;color:#9f1239}.pill.hid{background:#e5e7eb;color:#374151}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.top input{max-width:260px}
+.chk{display:flex;align-items:center;gap:6px;font-size:.85em;white-space:nowrap}.chk input{width:auto}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 20px;border-radius:99px;opacity:0;transition:.3s;pointer-events:none;z-index:9}
 #toast.on{opacity:1}
-@media(max-width:620px){.row{grid-template-columns:1fr auto}.ctl{grid-column:1/-1}.ctl input{flex:1}}
+@media(max-width:700px){.f,.row .f{grid-template-columns:1fr 1fr}.f .w2,.f .w3,.row .f>div:first-child{grid-column:1/-1}.row .f2{grid-template-columns:1fr 1fr}.row .f2>div:first-child{grid-column:1/-1}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header><h1>Stock Manager</h1><span class="who" id="who"></span><button class="ghost" id="outBtn" style="display:none" onclick="auth.signOut()">Sign out</button></header>
-
-  <div id="login" class="card" style="display:none">
-    <h2>Owner login</h2><p>Sign in with the owner's Google account to manage stock.</p>
-    <button onclick="signIn()">Continue with Google</button>
-  </div>
-
+  <header><h1>Book Prime · Admin</h1><span class="who" id="who"></span><button class="ghost" id="outBtn" style="display:none" onclick="auth.signOut()">Sign out</button></header>
+  <div id="login" class="card" style="display:none"><h2>Owner login</h2><p>Sign in with the owner's Google account.</p><button onclick="signIn()">Continue with Google</button></div>
   <div id="denied" class="card" style="display:none"><h2>Access denied</h2><p style="color:var(--muted);margin-top:6px">This Google account is not the shop owner. Sign out and use the owner account.</p></div>
 
   <div id="panel" style="display:none">
-    <div class="note">Set how many copies you have. At <b>0</b> the book shows <b>Sold out</b> on the website; as soon as you save a number above 0, it goes <b>Live</b> again. Changes appear on the shop instantly, with no refresh.</div>
+    <div class="note">For each book you can change the <b>price</b>, <b>stock count</b>, title, author, category and cover image link, or <b>hide</b> it from the shop. At stock <b>0</b> the shop shows <b>Sold out</b>; set a number above 0 and it goes <b>Live</b>. Changes appear on the shop instantly.</div>
+    <div class="card" id="seedBox" style="display:none"><b>First time setup</b><p style="color:var(--muted);margin:6px 0 12px">Your book list is not saved in the database yet. Tap once to load the 50 starter books (stock 2 each) so you can edit them here.</p><button onclick="seed()">Load 50 starter books</button></div>
+
     <div class="card">
-      <div class="top"><b>Books</b><button onclick="saveAll()">Save all changes</button></div>
+      <b>➕ Add a new book</b>
+      <div class="f" style="margin-top:10px">
+        <div class="w3"><label>Book title</label><input id="nT" placeholder="e.g. Atomic Habits"></div>
+        <div class="w3"><label>Author</label><input id="nA"></div>
+        <div class="w2"><label>Category</label><input id="nC" list="cats" placeholder="Self-Help"></div>
+        <div><label>Price ₹</label><input id="nP" type="number" min="1"></div>
+        <div><label>Stock</label><input id="nQ" type="number" min="0" value="2"></div>
+        <div class="w2"><label>Cover image link (optional)</label><input id="nI" placeholder="https://…jpg"></div>
+      </div>
+      <div style="margin-top:12px"><button onclick="addBook()">Add book to shop</button></div>
+      <datalist id="cats"></datalist>
+    </div>
+
+    <div class="card">
+      <div class="top"><b id="cnt">Books</b><input id="srch" placeholder="Search…" oninput="paint()"></div>
       <div id="rows"></div>
     </div>
   </div>
 </div>
 <div id="toast"></div>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
+<script src="books-data.js"></script>
 <script>
-// Convenience check only. The REAL protection is in firestore.rules (only the owner email can write).
-const OWNER_EMAILS=["bookprime.inindia@gmail.com"];
-// Keep ids/titles in sync with the books list in index.html
-const books=[
- {id:1,t:"The Midnight Library",a:"Matt Haig"},{id:2,t:"Atomic Habits",a:"James Clear"},
- {id:3,t:"The Alchemist",a:"Paulo Coelho"},{id:4,t:"Wings of Fire",a:"A.P.J. Abdul Kalam"},
- {id:5,t:"The Immortals of Meluha",a:"Amish Tripathi"},{id:6,t:"Panchatantra",a:"Vishnu Sharma"},
- {id:7,t:"Gitanjali",a:"Rabindranath Tagore"},{id:8,t:"India After Gandhi",a:"Ramachandra Guha"},
- {id:9,t:"Pride and Prejudice",a:"Jane Austen"},{id:10,t:"Rich Dad Poor Dad",a:"Robert Kiyosaki"}
-];
+// Convenience check only. The REAL protection is in firestore.rules.
+const OWNER_EMAILS=["bookprime.inindia@gmail.com","ravindraoptional@gmail.com"];
 const $=id=>document.getElementById(id);
-let auth,db,cur={},unsub=null;
-
-function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("on"),2600)}
-function show(which){["login","denied","panel"].forEach(k=>$(k).style.display=k===which?"block":"none")}
-
-if(!window.FIREBASE_CONFIG||FIREBASE_CONFIG.apiKey.startsWith("YOUR")){
-  show("login");$("login").innerHTML="<h2>Not set up yet</h2><p>Add your Firebase keys in firebase-config.js first.</p>";
-}else{
+const esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let auth,db,stock={},list=[],fromDb=false,u1=null,u2=null,typing=null;
+const COLS=["#3b1d5a","#c2410c","#be185d","#1d4ed8","#7c3aed","#0f766e","#b45309","#0e7490","#44403c","#9d174d"];
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("on"),2800)}
+function show(w){["login","denied","panel"].forEach(k=>$(k).style.display=k===w?"block":"none")}
+if(!window.FIREBASE_CONFIG||FIREBASE_CONFIG.apiKey.startsWith("YOUR")){show("login");$("login").innerHTML="<h2>Not set up yet</h2><p>Add your Firebase keys in firebase-config.js first.</p>"}
+else{
   firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();db=firebase.firestore();
-  build();
   auth.onAuthStateChanged(u=>{
-    if(unsub){unsub();unsub=null}
+    [u1,u2].forEach(f=>f&&f());u1=u2=null;
     $("outBtn").style.display=u?"":"none";$("who").textContent=u?u.email:"";
     if(!u)return show("login");
     if(!OWNER_EMAILS.includes(u.email))return show("denied");
     show("panel");
-    unsub=db.collection("stock").onSnapshot(snap=>{cur={};snap.forEach(d=>cur[d.id]=d.data().qty);paint()},e=>toast("Cannot read stock: "+e.message));
+    u1=db.collection("books").onSnapshot(s=>{fromDb=!s.empty;list=fromDb?s.docs.map(d=>({id:+d.id,...d.data()})):DEFAULT_BOOKS.slice();list.sort((a,b)=>(a.ord||999)-(b.ord||999));$("seedBox").style.display=fromDb?"none":"block";paint()},e=>toast("Cannot read books: "+e.message));
+    u2=db.collection("stock").onSnapshot(s=>{stock={};s.forEach(d=>stock[d.id]=d.data().qty);paint()},e=>toast("Cannot read stock: "+e.message));
   });
 }
 function signIn(){auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e=>toast(e.message))}
 
-function build(){
-  $("rows").innerHTML=books.map(b=>`<div class="row"><div class="nm"><b>${b.t}</b><small>${b.a}</small></div>
-   <span class="pill" id="p${b.id}"></span>
-   <div class="ctl"><input type="number" min="0" step="1" id="i${b.id}" placeholder="Qty" oninput="this.dataset.d=1">
-   <button onclick="save(${b.id})">Save</button><button class="ghost" onclick="soldOut(${b.id})">Mark sold out</button></div></div>`).join("");
-}
+function pill(b){const q=stock[b.id];
+  if(b.on===false)return['Hidden','hid'];
+  if(q===undefined||q===0)return['Sold out','out'];
+  if(q<=3)return['Low · '+q+' left','low'];return['Live · '+q+' in stock','live']}
 function paint(){
-  books.forEach(b=>{
-    const q=cur[b.id],p=$("p"+b.id),i=$("i"+b.id);
-    if(q===undefined){p.textContent="Not set · shows Sold out";p.className="pill out"}
-    else if(q===0){p.textContent="Sold out";p.className="pill out"}
-    else if(q<=3){p.textContent="Low · "+q+" left";p.className="pill low"}
-    else{p.textContent="Live · "+q+" in stock";p.className="pill live"}
-    if(!i.dataset.d)i.value=q===undefined?"":q;   // don't overwrite a number the owner is typing
-  });
+  if(document.activeElement&&document.activeElement.closest&&document.activeElement.closest(".row"))return; // don't redraw while typing
+  $("cats").innerHTML=[...new Set(list.map(b=>b.c))].map(c=>`<option value="${esc(c)}">`).join("");
+  const q=$("srch").value.toLowerCase();
+  const l=list.filter(b=>(b.t+" "+b.a+" "+b.c).toLowerCase().includes(q));
+  $("cnt").textContent="Books ("+list.filter(b=>b.on!==false).length+" shown on shop · "+list.length+" total)";
+  $("rows").innerHTML=l.map(b=>{const [pt,pc]=pill(b);return `<div class="row" id="r${b.id}">
+   <div class="f">
+    <div><label>Title</label><input id="t${b.id}" value="${esc(b.t)}"></div>
+    <div><label>Author</label><input id="a${b.id}" value="${esc(b.a)}"></div>
+    <div><label>Category</label><input id="c${b.id}" list="cats" value="${esc(b.c)}"></div>
+    <div><label>Price ₹</label><input id="p${b.id}" type="number" min="1" value="${b.p}"></div>
+    <div><label>Stock</label><input id="q${b.id}" type="number" min="0" value="${stock[b.id]===undefined?'':stock[b.id]}"></div>
+   </div>
+   <div class="f2">
+    <div><label>Cover image link</label><input id="i${b.id}" value="${esc(b.img||'')}" placeholder="images/book-${b.id}.jpg or https://…"></div>
+    <label class="chk"><input type="checkbox" id="o${b.id}" ${b.on===false?'':'checked'}> Show on shop</label>
+    <span class="pill ${pc}">${pt}</span>
+    <button onclick="saveBook(${b.id})">Save</button>
+    <button class="ghost" onclick="$('q${b.id}').value=0;saveBook(${b.id})">Sold out</button>
+   </div></div>`}).join("")||"<p style='color:var(--muted)'>No books found.</p>";
 }
-function valid(v){const n=Number(v);return v!==""&&Number.isInteger(n)&&n>=0&&n<=100000?n:null}
-async function save(id){
-  const i=$("i"+id),n=valid(i.value);
-  if(n===null)return toast("Enter a whole number (0 or more)");
-  try{await db.collection("stock").doc(String(id)).set({qty:n},{merge:true});delete i.dataset.d;toast("Saved ✓")}
+document.addEventListener("focusout",()=>setTimeout(()=>{if(!document.activeElement||!document.activeElement.closest(".row"))paint()},200));
+const num=v=>{const n=Number(v);return v!==""&&Number.isInteger(n)?n:null};
+async function saveBook(id){
+  const b=list.find(x=>x.id===id),p=num($("p"+id).value),q=num($("q"+id).value),t=$("t"+id).value.trim();
+  if(!t)return toast("Title cannot be empty");
+  if(p===null||p<1)return toast("Enter a price of ₹1 or more");
+  if(q===null||q<0)return toast("Enter stock as a whole number (0 or more)");
+  const doc={id,t,a:$("a"+id).value.trim(),c:$("c"+id).value.trim()||"Books",p,img:$("i"+id).value.trim(),col:b.col||COLS[id%COLS.length],on:$("o"+id).checked,ord:b.ord||id};
+  try{const w=db.batch();w.set(db.collection("books").doc(String(id)),doc);w.set(db.collection("stock").doc(String(id)),{qty:q},{merge:true});await w.commit();toast("Saved ✓");document.activeElement.blur()}
   catch(e){toast("Could not save: "+e.message)}
 }
-function soldOut(id){$("i"+id).value=0;save(id)}
-async function saveAll(){
-  const b=db.batch();let c=0;
-  for(const k of books){
-    const i=$("i"+k.id);if(!i.dataset.d)continue;
-    const n=valid(i.value);if(n===null)return toast("Check the number for: "+k.t);
-    b.set(db.collection("stock").doc(String(k.id)),{qty:n},{merge:true});c++;
-  }
-  if(!c)return toast("Nothing changed");
-  try{await b.commit();books.forEach(k=>delete $("i"+k.id).dataset.d);toast("Saved "+c+" book"+(c>1?"s":"")+" ✓")}
-  catch(e){toast("Could not save: "+e.message)}
+async function addBook(){
+  const t=$("nT").value.trim(),p=num($("nP").value),q=num($("nQ").value);
+  if(!t)return toast("Enter the book title");
+  if(p===null||p<1)return toast("Enter the price");
+  if(q===null||q<0)return toast("Enter the stock count");
+  if(!fromDb)return toast("First tap 'Load 50 starter books' above, then add new books");
+  const id=Math.max(0,...list.map(b=>b.id))+1,ord=Math.max(0,...list.map(b=>b.ord||0))+1;
+  const doc={id,t,a:$("nA").value.trim(),c:$("nC").value.trim()||"Books",p,img:$("nI").value.trim(),col:COLS[id%COLS.length],on:true,ord};
+  try{const w=db.batch();w.set(db.collection("books").doc(String(id)),doc);w.set(db.collection("stock").doc(String(id)),{qty:q});await w.commit();
+    ["nT","nA","nC","nP","nI"].forEach(k=>$(k).value="");$("nQ").value=2;toast("Book added ✓ — it is now on the shop")}
+  catch(e){toast("Could not add: "+e.message)}
+}
+async function seed(){
+  if(!confirm("Load the starter books into the database?"))return;
+  try{
+    for(let i=0;i<DEFAULT_BOOKS.length;i+=200){const w=db.batch();
+      DEFAULT_BOOKS.slice(i,i+200).forEach(b=>{w.set(db.collection("books").doc(String(b.id)),b);
+        if(b.on!==false&&stock[b.id]===undefined)w.set(db.collection("stock").doc(String(b.id)),{qty:2},{merge:true})});
+      await w.commit()}
+    toast("50 books loaded ✓")}
+  catch(e){toast("Could not load: "+e.message)}
 }
 </script>
 </body>
