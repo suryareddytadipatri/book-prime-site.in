@@ -616,7 +616,7 @@ async function pay(){
   const btn=$("payBtn");btn.disabled=true;
   try{
     const items=Object.entries(cart).map(([id,n])=>({id:+id,qty:n}));
-    const idToken=await user.getIdToken();
+    const idToken=await user.getIdToken(true);
     const o=await(await fetch("/.netlify/functions/create-order",{method:"POST",body:JSON.stringify({items,coupon,state:d.state,idToken})})).json();
     if(!o.order_id)throw new Error(o.error||(o.errorMessage?"Server setup problem: "+String(o.errorMessage).slice(0,160):"Could not create the order"));
     const rzp=new Razorpay({key:o.key_id,order_id:o.order_id,amount:o.amount,currency:"INR",name:"Book Prime.in India",description:"Book order",
