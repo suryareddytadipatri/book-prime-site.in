@@ -9,4 +9,4 @@ if (!admin.apps.length) {
     }),
   });
 }
-module.exports = { db: admin.firestore() };
+module.exports = { db: admin.firestore(), auth: admin.auth() };
