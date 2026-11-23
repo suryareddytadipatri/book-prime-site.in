@@ -194,17 +194,17 @@ footer h4{color:#94a3b8}.copy{color:#94a3b8}
 .ibar{background:#16213e}
 /* owner */
 .owner{padding-block:36px 72px;text-align:center}
-.ownercard{position:relative;overflow:hidden;max-width:780px;margin:24px auto 0;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:center;text-align:left;padding:38px 42px;border-radius:28px;background:linear-gradient(145deg,#16213e,#0e1527);border:1px solid rgba(251,191,36,.28);box-shadow:0 26px 60px rgba(0,0,0,.45)}
+.ownercard{position:relative;overflow:hidden;max-width:640px;margin:20px auto 0;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;text-align:left;padding:24px 28px;border-radius:22px;background:linear-gradient(145deg,#16213e,#0e1527);border:1px solid rgba(251,191,36,.28);box-shadow:0 26px 60px rgba(0,0,0,.45)}
 .ownercard:before{content:"";position:absolute;width:340px;height:340px;right:-110px;top:-130px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.22),transparent 70%)}
-.ophoto{position:relative;flex:none;width:150px;height:150px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#fbbf24,#ff6b35);display:grid;place-items:center;color:#1b1305;font:800 2.6em 'Fraunces',serif;border:5px solid #0e1527;box-shadow:0 0 0 3px var(--gold),0 0 0 10px rgba(251,191,36,.14)}
+.ophoto{position:relative;flex:none;width:110px;height:110px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#fbbf24,#ff6b35);display:grid;place-items:center;color:#1b1305;font:800 2.6em 'Fraunces',serif;border:5px solid #0e1527;box-shadow:0 0 0 3px var(--gold),0 0 0 10px rgba(251,191,36,.14)}
 .ophoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .odet{position:relative}.odet h3{font-size:clamp(1.5em,3vw,2em);line-height:1.2}
-.orole{display:inline-block;margin:10px 0 18px;padding:5px 16px;border-radius:99px;border:1px solid rgba(251,191,36,.45);color:var(--gold);font-weight:600;font-size:.88em;letter-spacing:.04em}
+.orole{display:inline-block;margin:8px 0 14px;padding:5px 16px;border-radius:99px;border:1px solid rgba(251,191,36,.45);color:var(--gold);font-weight:600;font-size:.88em;letter-spacing:.04em}
 .ocontacts{display:flex;gap:12px;flex-wrap:wrap}
-.ocall,.owa{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:99px;font-weight:700}
+.ocall,.owa,.omail{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;font-weight:700}
 .ocall{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1b1305}
-.owa{background:rgba(37,211,102,.14);color:#4ade80;border:1px solid rgba(37,211,102,.45)}
-@media(max-width:640px){.ownercard{grid-template-columns:1fr;justify-items:center;text-align:center;padding:30px 20px;gap:20px}.ophoto{width:124px;height:124px}.ocontacts{justify-content:center}}
+.omail{background:rgba(255,255,255,.07);color:#eef2ff;border:1px solid rgba(255,255,255,.2);font-size:.92em;word-break:break-all}.owa{background:rgba(37,211,102,.14);color:#4ade80;border:1px solid rgba(37,211,102,.45)}
+@media(max-width:640px){.ownercard{grid-template-columns:1fr;justify-items:center;text-align:center;padding:30px 20px;gap:20px}.ophoto{width:96px;height:96px}.ocontacts{justify-content:center}}
 
 /* ===== v5: polished header ===== */
 header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px solid rgba(251,191,36,.16);box-shadow:0 10px 30px rgba(0,0,0,.35)}
@@ -236,6 +236,12 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
 .obox .ocard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 18px}
 .obox .ocard .oh{color:#9ca3b8}.obox .ocard .it{color:#e5e7f2;line-height:1.7}.obox .ocard .tot{color:#fbbf24;font-size:1.1em}
 .obox .ocard .os{background:rgba(74,222,128,.14);color:#4ade80}
+.ownercard{max-width:520px!important;padding:16px 20px!important;gap:16px!important;border-radius:18px!important}
+.ophoto{width:84px!important;height:84px!important;border-width:4px!important}
+.odet h3{font-size:1.15em!important;margin:0 0 2px!important}.orole{margin:0 0 8px!important}
+.ocontacts{gap:8px!important}.ocontacts a{font-size:.88em!important;padding:7px 12px!important}
+.owner{padding-block:24px 56px!important}
+@media(max-width:640px){.ownercard{padding:20px 16px!important;gap:12px!important}.ophoto{width:76px!important;height:76px!important}}
 </style>
 <style>
 #addpop{position:fixed;left:50%;top:84px;transform:translate(-50%,-30px);opacity:0;pointer-events:none;z-index:9999;transition:.3s;width:min(92vw,360px)}
@@ -327,8 +333,9 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
       <h3>Ravindra Reddy Tadipatri</h3>
       <p class="orole">Owner · Bookprime.in</p>
       <div class="ocontacts">
-        <a class="ocall" href="tel:+917997555414"><svg><use href="#i-phone"/></svg>+91 79975 55414</a>
-        <a class="owa" href="https://wa.me/917997555414?text=Hi%20Book%20Prime.in%20India" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="ocall" href="tel:+916301331642"><svg><use href="#i-phone"/></svg>+91 63013 31642</a>
+        <a class="omail" href="mailto:ravindraoptional@gmail.com"><svg><use href="#i-mail"/></svg>ravindraoptional@gmail.com</a>
+        <a class="owa" href="https://wa.me/916301331642?text=Hi%20Book%20Prime.in%20India" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
   </div>
@@ -344,14 +351,14 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
       <li><a href="#" onclick="toggle();return false">Cart</a></li>
       <li><a href="#about">About Us</a></li></ul></div>
     <div><h4>CONTACT</h4><ul>
-      <li class="crow"><svg><use href="#i-mail"/></svg><a href="mailto:bookprime.inindia@gmail.com">bookprime.inindia@gmail.com</a></li>
-      <li class="crow"><svg><use href="#i-phone"/></svg><a href="https://wa.me/917997555414" target="_blank" rel="noopener">+91 79975 55414 (WhatsApp)</a></li>
+      <li class="crow"><svg><use href="#i-mail"/></svg><a href="mailto:ravindraoptional@gmail.com">ravindraoptional@gmail.com</a></li>
+      <li class="crow"><svg><use href="#i-phone"/></svg><a href="https://wa.me/916301331642" target="_blank" rel="noopener">+91 63013 31642 (WhatsApp)</a></li>
       <li class="crow"><svg><use href="#i-pin"/></svg><span>Hyderabad, Telangana</span></li></ul></div>
   </div>
   <div class="copy">© 2026 Book Prime.in India. All rights reserved.</div>
 </footer>
 
-<a class="wa" href="https://wa.me/917997555414?text=Hi%20Book%20Prime.in%20India" target="_blank" rel="noopener"><svg><use href="#i-phone"/></svg><b>WhatsApp</b></a>
+<a class="wa" href="https://wa.me/916301331642?text=Hi%20Book%20Prime.in%20India" target="_blank" rel="noopener"><svg><use href="#i-phone"/></svg><b>WhatsApp</b></a>
 
 <div id="shade" onclick="toggle()"></div>
 <aside id="drawer">
@@ -393,7 +400,7 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
   <select id="cCountry"><option>India</option></select>
   <select id="cState" onchange="shipUpd()"></select>
   <input id="cAddr" placeholder="Address (house no, street, city)">
-  <input id="cPin" placeholder="PIN code" inputmode="numeric" maxlength="6">
+  <input id="cPin" oninput="shipUpd()" placeholder="PIN code" inputmode="numeric" maxlength="6">
   <div class="phone"><span>🇮🇳 +91</span><input id="cPhone" placeholder="Phone number" inputmode="numeric" maxlength="10"></div>
   <h3>Shipping method</h3><div id="shipBox" class="shipbox">Enter delivery details to view shipping options</div>
   <h3>Payment</h3><div class="paybox"><b>Razorpay Secure Checkout</b><p>UPI, cards, net banking and wallets. You'll complete payment on the next screen.</p></div>
@@ -422,7 +429,7 @@ const books=[
  {id:3,img:"images/book-3.jpg",t:"The Alchemist",a:"Paulo Coelho",c:"Fiction",p:299,col:"#be185d"},
  {id:4,img:"images/book-4.jpg",t:"Wings of Fire",a:"A.P.J. Abdul Kalam",c:"Biographies",p:250,col:"#1d4ed8"},
  {id:5,img:"images/book-5.jpg",t:"The Immortals of Meluha",a:"Amish Tripathi",c:"Mythology",p:299,col:"#7c3aed"},
- {id:6,img:"images/book-6.jpg",t:"Panchatantra",a:"Vishnu Sharma",c:"Children",p:199,col:"#d97706"},
+ {id:6,img:"images/book-6.jpg",t:"Panchatantra",a:"Vishnu Sharma",c:"Children",p:20,col:"#d97706"},
  {id:7,img:"images/book-7.jpg",t:"Gitanjali",a:"Rabindranath Tagore",c:"Poetry",p:225,col:"#0f766e"},
  {id:8,img:"images/book-8.jpg",t:"India After Gandhi",a:"Ramachandra Guha",c:"History",p:699,col:"#44403c"},
  {id:9,img:"images/book-9.jpg",t:"Pride and Prejudice",a:"Jane Austen",c:"Classics",p:199,col:"#0e7490"},
@@ -497,6 +504,7 @@ $("qcard").addEventListener("mouseleave",startQ);
 /* ===== Config (keep PRICES/COUPONS/SHIPPING in sync with netlify/functions/create-order.js) ===== */
 const COUPONS={WELCOME10:10};
 const SHIPPING={name:"Standard delivery (3–7 days)",fee:50};
+const shipFee=()=>($("cState").value==="Telangana"&&/^500\d{3}$/.test($("cPin").value.trim()))?0:SHIPPING.fee; // free inside Hyderabad (PIN 500xxx)
 const STATES=["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Andaman and Nicobar Islands","Chandigarh","Dadra and Nagar Haveli and Daman and Diu","Delhi","Jammu and Kashmir","Ladakh","Lakshadweep","Puducherry"];
 $("cState").innerHTML='<option value="">State</option>'+STATES.map(x=>`<option>${x}</option>`).join("");
 
@@ -592,17 +600,17 @@ function applyCode(){
 function shipUpd(){
   const on=!!$("cState").value,b=$("shipBox");
   b.className="shipbox"+(on?" on":"");
-  b.innerHTML=on?`<span>${SHIPPING.name}</span><b>₹${SHIPPING.fee.toFixed(2)}</b>`:"Enter delivery details to view shipping options";
+  b.innerHTML=on?`<span>${SHIPPING.name}</span><b>${shipFee()===0?"FREE":"₹"+shipFee().toFixed(2)}</b>`:"Enter delivery details to view shipping options";
   sumUpd();
 }
 function sumUpd(){
   $("sumRows").innerHTML=Object.entries(cart).map(([id,n])=>{const b=books.find(x=>x.id==id);
     return `<div class="srow"><div class="thumb" style="background:${b.col}">${b.t[0]}<span class="tw">${pic(b)}</span><span class="qb">${n}</span></div><div><b>${b.t}</b><br><small>${b.a}</small></div><b>₹${(b.p*n).toFixed(2)}</b></div>`}).join("");
-  const sub=total(),disc=coupon?Math.round(sub*COUPONS[coupon]/100):0,ship=$("cState").value?SHIPPING.fee:null;
+  const sub=total(),disc=coupon?Math.round(sub*COUPONS[coupon]/100):0,ship=$("cState").value?shipFee():null;
   const grand=sub-disc+(ship||0);
   $("sumTot").innerHTML=`<div class="trow"><span>Subtotal</span><span>₹${sub.toFixed(2)}</span></div>`
    +(disc?`<div class="trow"><span>Discount (${coupon})</span><span>−₹${disc.toFixed(2)}</span></div>`:"")
-   +`<div class="trow"><span>Shipping</span><span>${ship===null?"Choose shipping destination":"₹"+ship.toFixed(2)}</span></div>`
+   +`<div class="trow"><span>Shipping</span><span>${ship===null?"Choose shipping destination":(ship===0?"FREE":"₹"+ship.toFixed(2))}</span></div>`
    +`<div class="trow t"><span>Total</span><span>₹${grand.toFixed(2)}</span></div>`;
   $("payBtn").textContent="Pay ₹"+grand.toFixed(2);
 }
@@ -617,7 +625,7 @@ async function pay(){
   try{
     const items=Object.entries(cart).map(([id,n])=>({id:+id,qty:n}));
     const idToken=await user.getIdToken(true);
-    const o=await(await fetch("/.netlify/functions/create-order",{method:"POST",body:JSON.stringify({items,coupon,state:d.state,idToken})})).json();
+    const o=await(await fetch("/.netlify/functions/create-order",{method:"POST",body:JSON.stringify({items,coupon,state:d.state,pin:d.pin,idToken})})).json();
     if(!o.order_id)throw new Error(o.error||(o.errorMessage?"Server setup problem: "+String(o.errorMessage).slice(0,160):"Could not create the order"));
     const rzp=new Razorpay({key:o.key_id,order_id:o.order_id,amount:o.amount,currency:"INR",name:"Book Prime.in India",description:"Book order",
       prefill:{name:d.name,email:d.email,contact:d.phone},theme:{color:"#3b1d5a"},
