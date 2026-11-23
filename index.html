@@ -249,6 +249,9 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
 .pinfo{width:100%;text-align:center;color:var(--muted);font-size:.85em}
 .grid.sl{animation:sl .35s ease}.grid.sr{animation:sr .35s ease}
 @keyframes sl{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}@keyframes sr{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+.lgimg{height:40px;width:auto;display:block}.gimg{width:min(280px,74vw);height:auto;display:block;margin:0 auto 6px}
+.logo{display:flex;align-items:center}
+@media(max-width:560px){.lgimg{height:30px}}
 </style>
 <style>
 #addpop{position:fixed;left:50%;top:84px;transform:translate(-50%,-30px);opacity:0;pointer-events:none;z-index:9999;transition:.3s;width:min(92vw,360px)}
@@ -280,7 +283,7 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
 </defs></svg>
 
 <header><div class="wrap nav">
-  <a class="logo" href="#top"><i><svg><use href="#i-bp"/></svg></i><span>BookPrime</span></a>
+  <a class="logo" href="#top" aria-label="BookPrime.in"><img class="lgimg" src="logo-full.png" alt="BookPrime.in"></a>
   <nav class="links">
     <a href="#top" class="on" id="nHome" onclick="view('all')">Home</a>
     <a href="#books" onclick="view('all')">Books</a>
@@ -352,7 +355,7 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
 
 <footer>
   <div class="wrap fgrid2">
-    <div><a class="logo" href="#top"><i><svg><use href="#i-bp"/></svg></i>BookPrime</a><p>India's neighbourhood online bookstore — handpicked titles, honest prices in ₹, delivered to your door.</p></div>
+    <div><a class="logo" href="#top" aria-label="BookPrime.in"><img class="lgimg" src="logo-full.png" alt="BookPrime.in"></a><p>India's neighbourhood online bookstore — handpicked titles, honest prices in ₹, delivered to your door.</p></div>
     <div><h4>EXPLORE</h4><ul>
       <li><a href="#books" onclick="view('all')">All Books</a></li>
       <li><a href="#books" onclick="view('wish')">Wishlist</a></li>
@@ -378,7 +381,7 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
 
 <div id="gate" class="gate" hidden>
   <div class="gbox">
-    <div class="glogo"><svg><use href="#i-bp"/></svg></div>
+    <img class="gimg" src="logo-full.png" alt="BookPrime.in">
     <h1>Book Prime.in India</h1>
     <p id="gmsg">Log in to start shopping.</p>
     <button class="btn full" id="gbtn" onclick="gLogin()">Continue with Google</button>
