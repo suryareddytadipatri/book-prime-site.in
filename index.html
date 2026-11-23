@@ -252,6 +252,15 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
 .lgimg{height:40px;width:auto;display:block}.gimg{width:min(280px,74vw);height:auto;display:block;margin:0 auto 6px}
 .logo{display:flex;align-items:center}
 @media(max-width:560px){.lgimg{height:30px}}
+#zoom{position:fixed;inset:0;z-index:9998;background:rgba(5,9,18,.88);backdrop-filter:blur(6px);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .25s;cursor:zoom-out}
+#zoom.on{opacity:1;pointer-events:auto}
+.zbox{display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.55);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+#zoom.on .zbox{transform:scale(1)}
+.zcover{width:min(78vw,380px);aspect-ratio:2/3;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.6);display:grid;place-items:center;text-align:center;color:#fff;font-weight:700;font-family:Georgia,serif;position:relative}
+.zcover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.zcap{text-align:center;color:#eef2ff;display:flex;flex-direction:column;gap:6px;align-items:center}
+.zcap span{color:#9aa6c0}.zcap small{color:#9aa6c0;font-size:.78em}
+.zbtn{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1b1305;border:0;border-radius:99px;padding:10px 22px;font-weight:800;cursor:pointer}.zbtn:disabled{opacity:.5}
 </style>
 <style>
 #addpop{position:fixed;left:50%;top:84px;transform:translate(-50%,-30px);opacity:0;pointer-events:none;z-index:9999;transition:.3s;width:min(92vw,360px)}
@@ -452,7 +461,7 @@ function render(){
   const all=shown().filter(b=>(cat==="All"||b.c===cat)&&(mode==="all"||wish.has(b.id))&&(b.t+b.a).toLowerCase().includes(q));
   const pages=Math.max(1,Math.ceil(all.length/PER));if(page>=pages)page=pages-1;
   const list=all.slice(page*PER,page*PER+PER);
-  $("grid").innerHTML=list.map(b=>`<div class="item ${left(b.id)===0?'sold':''}">${tag(b.id)}<div class="cover" style="background:${b.col}">${b.t}${pic(b)}</div>
+  $("grid").innerHTML=list.map(b=>`<div class="item ${left(b.id)===0?'sold':''}">${tag(b.id)}<div class="cover" style="background:${b.col};cursor:zoom-in" onclick="zoomBook(${b.id})" title="Tap to zoom">${b.t}${pic(b)}</div>
    <button class="heart ${wish.has(b.id)?'on':''}" aria-label="Wishlist" onclick="fav(${b.id})"><svg><use href="#i-heart"/></svg></button>
    <div class="info"><strong>${b.t}</strong><small>${b.a}</small><span class="price">₹${b.p}</span>${left(b.id)===0?'<button class="btn" disabled>Sold out</button>':`<button class="btn" onclick="add(${b.id})">Add to cart</button>`}</div></div>`).join("")
    ||`<p class="empty">${mode==="wish"?"Your wishlist is empty. Tap the heart on a book to save it.":"No books found."}</p>`;
@@ -473,6 +482,14 @@ let _pt;function addPop(id){const b=books.find(x=>x.id==id);let el=document.getE
  if(!el){el=document.createElement("div");el.id="addpop";document.body.appendChild(el)}
  const n=cart[id];el.innerHTML=`<div class="apc"><div class="apt">✓ Added to cart</div><div class="apb"><div class="apimg" style="background:${b.col}">${pic(b)}</div><div class="apx"><b>${b.t}</b><small>₹${b.p} · Qty ${n}</small></div></div><div class="apa"><button onclick="document.getElementById('addpop').classList.remove('on')">Keep shopping</button><button class="go" onclick="document.getElementById('addpop').classList.remove('on');toggle()">View cart</button></div></div>`;
  el.classList.add("on");clearTimeout(_pt);_pt=setTimeout(()=>el.classList.remove("on"),3500)}
+
+function zoomBook(id){const b=books.find(x=>x.id==id);if(!b)return;let z=document.getElementById("zoom");
+ if(!z){z=document.createElement("div");z.id="zoom";document.body.appendChild(z);z.addEventListener("click",e=>{if(!e.target.closest(".zbtn"))zoomOut()})}
+ const out=left(b.id)===0;
+ z.innerHTML=`<div class="zbox"><div class="zcover" style="background:${b.col}">${b.t}${pic(b)}</div><div class="zcap"><b>${b.t}</b><span>${b.a} · ₹${b.p}</span>${out?'<button class="zbtn" disabled>Sold out</button>':`<button class="zbtn" onclick="add(${b.id});zoomOut()">Add to cart</button>`}<small>Tap the book to zoom out</small></div></div>`;
+ requestAnimationFrame(()=>z.classList.add("on"));document.body.style.overflow="hidden"}
+function zoomOut(){const z=document.getElementById("zoom");if(z){z.classList.remove("on");document.body.style.overflow=""}}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")zoomOut()});
 function chg(id,d){const n=left(id);if(d>0&&n!==null&&cart[id]>=n)return alert("Only "+n+" left in stock.");cart[id]+=d;if(cart[id]<=0)delete cart[id];upd()}
 function total(){return Object.entries(cart).reduce((s,[id,n])=>s+books.find(b=>b.id==id).p*n,0)}
 function upd(){
@@ -646,10 +663,11 @@ async function pay(){
     const rzp=new Razorpay({key:o.key_id,order_id:o.order_id,amount:o.amount,currency:"INR",name:"Book Prime.in India",description:"Book order",
       prefill:{name:d.name,email:d.email,contact:d.phone},theme:{color:"#3b1d5a"},
       handler:async r=>{
-        const v=await(await fetch("/.netlify/functions/verify-payment",{method:"POST",body:JSON.stringify(r)})).json();
+        const itemsText=items.map(i=>{const b=books.find(x=>x.id===i.id);return b.t+" — Qty: "+i.qty+" × ₹"+b.p+" = ₹"+(b.p*i.qty)}).join("\n");
+        const imageLinks=items.map(i=>{const b=books.find(x=>x.id===i.id);return b.t+": "+(/^https?:/.test(b.img)?b.img:location.origin+"/"+b.img)}).join("\n");
+        const v=await(await fetch("/.netlify/functions/verify-payment",{method:"POST",body:JSON.stringify({...r,customer:d,itemsText,imageLinks})})).json();
         if(v.ok){
-          toForm("order",{...d,items:items.map(i=>{const b=books.find(x=>x.id===i.id);return b.t+" — Qty: "+i.qty+" × ₹"+b.p+" = ₹"+(b.p*i.qty)}).join("\n"),total_books:items.reduce((a,i)=>a+i.qty,0),book_images:items.map(i=>{const b=books.find(x=>x.id===i.id);return b.t+": "+(/^https?:/.test(b.img)?b.img:location.origin+"/"+b.img)}).join("\n"),amount:o.amount/100,payment_id:r.razorpay_payment_id,order_id:r.razorpay_order_id,uid:user.uid,note:v.oversold?"OVERSOLD: stock ran out just before this order was confirmed. Refund or arrange a restock.":""});
-          cart={};coupon=null;upd();closeCheckout();
+                    cart={};coupon=null;upd();closeCheckout();
           alert(v.oversold?"Payment received. Order ID: "+r.razorpay_order_id+". One book had just sold out, so we will contact you shortly to arrange it or refund you.":"Payment successful! Order ID: "+r.razorpay_order_id);
         }else alert("We could not verify the payment. Please contact us on WhatsApp.");
       }});
