@@ -1,1 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
 
+    // STOCK: everyone can READ (so the shop can show Sold out / Live).
+    // Only the owner's verified Google account can WRITE (from admin.html).
+    match /stock/{id} {
+      allow read: if true;
+      allow write: if request.auth != null
+                   && request.auth.token.email_verified == true
+                   && request.auth.token.email in ['bookprime.inindia@gmail.com','ravindraoptional@gmail.com'];   // <- owner Google email(s); add more inside the brackets, separated by commas
+    }
+
+    // BOOKS (catalogue): everyone can read; only the owner can add / edit / hide books (from admin.html).
+    match /books/{id} {
+      allow read: if true;
+      allow write: if request.auth != null
+                   && request.auth.token.email_verified == true
+                   && request.auth.token.email in ['bookprime.inindia@gmail.com','ravindraoptional@gmail.com'];
+    }
+
+    // ORDERS: a signed-in customer can READ only their own orders (matched by uid). Nobody can write from the browser.
+    match /orders/{id} {
+      allow read: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow write: if false;
+    }
+
+    // Everything else: private. Only the Netlify server code (admin SDK) can use them.
+    match /{document=**} { allow read, write: if false; }
+  }
+}
