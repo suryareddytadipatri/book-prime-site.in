@@ -242,6 +242,13 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
 .ocontacts{gap:8px!important}.ocontacts a{font-size:.88em!important;padding:7px 12px!important}
 .owner{padding-block:24px 56px!important}
 @media(max-width:640px){.ownercard{padding:20px 16px!important;gap:12px!important}.ophoto{width:76px!important;height:76px!important}}
+.pager{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px}
+.pager button{background:rgba(255,255,255,.06);border:1px solid rgba(251,191,36,.3);color:var(--text);border-radius:99px;padding:9px 16px;font-weight:600;cursor:pointer}
+.pager button:disabled{opacity:.35;cursor:default}
+.pdots{display:flex;gap:6px}.pdots button{padding:0;width:38px;height:38px}.pdots button.on{background:var(--gold);color:#1b1305;border-color:var(--gold)}
+.pinfo{width:100%;text-align:center;color:var(--muted);font-size:.85em}
+.grid.sl{animation:sl .35s ease}.grid.sr{animation:sr .35s ease}
+@keyframes sl{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}@keyframes sr{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
 </style>
 <style>
 #addpop{position:fixed;left:50%;top:84px;transform:translate(-50%,-30px);opacity:0;pointer-events:none;z-index:9999;transition:.3s;width:min(92vw,360px)}
@@ -312,6 +319,7 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
   <h2 id="bt">All Books</h2>
   <div class="chips" id="chips"></div>
   <div class="grid" id="grid"></div>
+  <div class="pager" id="pager"></div>
 </section>
 
 <section class="features"><div class="wrap fgrid">
@@ -421,38 +429,36 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="books-data.js"></script>
 <script>
 
-const books=[
- {id:1,img:"images/book-1.jpg",t:"The Midnight Library",a:"Matt Haig",c:"Fiction",p:399,col:"#3b1d5a"},
- {id:2,img:"images/book-2.jpg",t:"Atomic Habits",a:"James Clear",c:"Self-Help",p:499,col:"#c2410c"},
- {id:3,img:"images/book-3.jpg",t:"The Alchemist",a:"Paulo Coelho",c:"Fiction",p:299,col:"#be185d"},
- {id:4,img:"images/book-4.jpg",t:"Wings of Fire",a:"A.P.J. Abdul Kalam",c:"Biographies",p:250,col:"#1d4ed8"},
- {id:5,img:"images/book-5.jpg",t:"The Immortals of Meluha",a:"Amish Tripathi",c:"Mythology",p:299,col:"#7c3aed"},
- {id:6,img:"images/book-6.jpg",t:"Panchatantra",a:"Vishnu Sharma",c:"Children",p:20,col:"#d97706"},
- {id:7,img:"images/book-7.jpg",t:"Gitanjali",a:"Rabindranath Tagore",c:"Poetry",p:225,col:"#0f766e"},
- {id:8,img:"images/book-8.jpg",t:"India After Gandhi",a:"Ramachandra Guha",c:"History",p:699,col:"#44403c"},
- {id:9,img:"images/book-9.jpg",t:"Pride and Prejudice",a:"Jane Austen",c:"Classics",p:199,col:"#0e7490"},
- {id:10,img:"images/book-10.jpg",t:"Rich Dad Poor Dad",a:"Robert Kiyosaki",c:"Self-Help",p:349,col:"#b45309"}
-];
-const catList=["Children","Classics","Fiction","Mythology","Self-Help","Biographies","Poetry","History"];
+let books=DEFAULT_BOOKS.slice();
+const shown=()=>books.filter(b=>b.on!==false);
+let catList=[];function mkCats(){catList=[...new Set(shown().map(b=>b.c))];$("track").innerHTML=[...catList,...catList,...catList,...catList].map(c=>`<span>${c}</span>`).join("")}
+let page=0;const PER=10;
 let cat="All",mode="all",cart={},wish=new Set();
 const $=id=>document.getElementById(id);
 
-$("track").innerHTML=[...catList,...catList,...catList,...catList].map(c=>`<span>${c}</span>`).join("");
+mkCats();
 
 function view(m){mode=m;render()}
 function render(){
   $("bt").textContent=mode==="wish"?"Your Wishlist":"All Books";
-  $("chips").innerHTML=["All",...catList].map(c=>`<button class="chip ${c===cat?'on':''}" onclick="cat='${c}';render()">${c}</button>`).join("");
+  $("chips").innerHTML=["All",...catList].map(c=>`<button class="chip ${c===cat?'on':''}" onclick="cat='${c}';page=0;render()">${c}</button>`).join("");
   const q=$("q").value.toLowerCase();
-  const list=books.filter(b=>(cat==="All"||b.c===cat)&&(mode==="all"||wish.has(b.id))&&(b.t+b.a).toLowerCase().includes(q));
+  const all=shown().filter(b=>(cat==="All"||b.c===cat)&&(mode==="all"||wish.has(b.id))&&(b.t+b.a).toLowerCase().includes(q));
+  const pages=Math.max(1,Math.ceil(all.length/PER));if(page>=pages)page=pages-1;
+  const list=all.slice(page*PER,page*PER+PER);
   $("grid").innerHTML=list.map(b=>`<div class="item ${left(b.id)===0?'sold':''}">${tag(b.id)}<div class="cover" style="background:${b.col}">${b.t}${pic(b)}</div>
    <button class="heart ${wish.has(b.id)?'on':''}" aria-label="Wishlist" onclick="fav(${b.id})"><svg><use href="#i-heart"/></svg></button>
    <div class="info"><strong>${b.t}</strong><small>${b.a}</small><span class="price">₹${b.p}</span>${left(b.id)===0?'<button class="btn" disabled>Sold out</button>':`<button class="btn" onclick="add(${b.id})">Add to cart</button>`}</div></div>`).join("")
    ||`<p class="empty">${mode==="wish"?"Your wishlist is empty. Tap the heart on a book to save it.":"No books found."}</p>`;
   $("wcnt").textContent=wish.size;
+  $("pager").innerHTML=pages<2?"":`<button ${page?'':'disabled'} onclick="goPage(${page-1})">‹ Prev</button><span class="pdots">${Array.from({length:pages},(_,i)=>`<button class="${i===page?'on':''}" onclick="goPage(${i})">${i+1}</button>`).join("")}</span><button ${page<pages-1?'':'disabled'} onclick="goPage(${page+1})">Next ›</button>`
+   +`<div class="pinfo">Showing ${page*PER+1}–${Math.min(all.length,page*PER+PER)} of ${all.length} books</div>`;
 }
+let _dir=1;function goPage(n){_dir=n>=page?1:-1;page=n;render();const g=$("grid");g.classList.remove("sl","sr");void g.offsetWidth;g.classList.add(_dir>0?"sl":"sr");$("books").scrollIntoView({behavior:"smooth",block:"start"})}
+(function(){let x0=null;const g=$("grid");g.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});g.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)<70)return;const pages=Math.ceil(shown().length/PER);if(dx<0&&page<pages-1)goPage(page+1);else if(dx>0&&page>0)goPage(page-1)},{passive:true})})();
 function fav(id){wish.has(id)?wish.delete(id):wish.add(id);render()}
 const pic=b=>`<img src="${b.img}" alt="${b.t.replace(/"/g,'')}" loading="lazy" onerror="this.remove()">`;
 let stock=null; // filled live from Firestore
@@ -473,7 +479,7 @@ function upd(){
    return `<div class="line"><span>${b.t}<br><small>₹${b.p}</small></span><span><button class="x" onclick="chg(${id},-1)">−</button>${n}<button class="x" onclick="chg(${id},1)">+</button></span></div>`}).join("")||"<p>Your cart is empty</p>";
 }
 function toggle(){$("drawer").classList.toggle("open");$("shade").classList.toggle("open")}
-$("q").addEventListener("input",()=>{render()});
+$("q").addEventListener("input",()=>{page=0;render()});
 
 render();upd();
 
@@ -515,6 +521,13 @@ function initAuth(){
   firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();
   if(needGate()){$("gate").hidden=false;document.body.classList.add("locked");$("gmsg").textContent="Loading…";$("gbtn").hidden=true}
   auth.getRedirectResult().then(r=>{if(r&&r.user)loginDone(r.user,"google")}).catch(()=>{});
+  // Live catalogue: books the owner adds/edits in admin.html (falls back to books-data.js when none saved yet)
+  firebase.firestore().collection("books").onSnapshot(snap=>{
+    if(snap.empty)return;
+    books=snap.docs.map(d=>({id:+d.id,...d.data()})).sort((a,b)=>(a.ord||999)-(b.ord||999));
+    Object.keys(cart).forEach(id=>{const b=books.find(x=>x.id==id);if(!b||b.on===false)delete cart[id]});
+    mkCats();if(cat!=="All"&&!catList.includes(cat))cat="All";render();upd();if($("co").classList.contains("open"))sumUpd();
+  },e=>console.log("books error",e));
   // Live stock: updates the page instantly when the owner changes a quantity
   firebase.firestore().collection("stock").onSnapshot(snap=>{
     stock={};books.forEach(b=>stock[b.id]=0);snap.forEach(d=>stock[+d.id]=d.data().qty||0);
@@ -632,7 +645,7 @@ async function pay(){
       handler:async r=>{
         const v=await(await fetch("/.netlify/functions/verify-payment",{method:"POST",body:JSON.stringify(r)})).json();
         if(v.ok){
-          toForm("order",{...d,items:items.map(i=>{const b=books.find(x=>x.id===i.id);return b.t+" — Qty: "+i.qty+" × ₹"+b.p+" = ₹"+(b.p*i.qty)}).join("\n"),total_books:items.reduce((a,i)=>a+i.qty,0),book_images:items.map(i=>{const b=books.find(x=>x.id===i.id);return b.t+": "+location.origin+"/"+b.img}).join("\n"),amount:o.amount/100,payment_id:r.razorpay_payment_id,order_id:r.razorpay_order_id,uid:user.uid,note:v.oversold?"OVERSOLD: stock ran out just before this order was confirmed. Refund or arrange a restock.":""});
+          toForm("order",{...d,items:items.map(i=>{const b=books.find(x=>x.id===i.id);return b.t+" — Qty: "+i.qty+" × ₹"+b.p+" = ₹"+(b.p*i.qty)}).join("\n"),total_books:items.reduce((a,i)=>a+i.qty,0),book_images:items.map(i=>{const b=books.find(x=>x.id===i.id);return b.t+": "+(/^https?:/.test(b.img)?b.img:location.origin+"/"+b.img)}).join("\n"),amount:o.amount/100,payment_id:r.razorpay_payment_id,order_id:r.razorpay_order_id,uid:user.uid,note:v.oversold?"OVERSOLD: stock ran out just before this order was confirmed. Refund or arrange a restock.":""});
           cart={};coupon=null;upd();closeCheckout();
           alert(v.oversold?"Payment received. Order ID: "+r.razorpay_order_id+". One book had just sold out, so we will contact you shortly to arrange it or refund you.":"Payment successful! Order ID: "+r.razorpay_order_id);
         }else alert("We could not verify the payment. Please contact us on WhatsApp.");
