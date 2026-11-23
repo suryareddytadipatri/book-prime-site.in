@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Book Prime.in India</title>
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#3b1d5a">
+<meta name="theme-color" content="#0b1220">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="BookPrime">
@@ -145,7 +145,7 @@ footer a:hover{color:var(--amber)}
 .gate{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:24px;background:linear-gradient(160deg,#3b1d5a,#24162f 70%);color:#fff;text-align:center}
 .gate[hidden],.ibar[hidden]{display:none}
 .gbox{width:min(380px,100%);display:flex;flex-direction:column;gap:14px;align-items:center}
-.glogo{width:84px;height:84px;border-radius:22px;background:#fff1e8;color:var(--amber);display:grid;place-items:center;box-shadow:0 14px 30px rgba(0,0,0,.35)}
+.glogo{width:84px;height:84px;border-radius:22px;background:linear-gradient(135deg,#4a2370,#1c2150);color:#fbbf24;display:grid;place-items:center;box-shadow:inset 0 0 0 2px rgba(251,191,36,.7),0 14px 30px rgba(0,0,0,.35)}
 .glogo svg{width:46px;height:46px}
 .gbox h1{font-size:1.9em;line-height:1.2}.gbox p{opacity:.85}
 .gbox .btn{background:#fff;color:var(--text);margin-top:6px}.gbox .btn[hidden]{display:none}
@@ -164,7 +164,7 @@ body{background:radial-gradient(1100px 560px at 85% -8%,#1b2547 0,transparent 62
 ::placeholder{color:#7d89a6}
 .search input,#drawer input,.mbox input,.co input,.co select{color:var(--text)}
 header{background:rgba(11,18,32,.9)}
-.logo i{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1b1305}.logo i svg{width:100%;height:100%}
+.logo i{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#4a2370,#1c2150);color:#fbbf24;box-shadow:inset 0 0 0 1.5px rgba(251,191,36,.7)}.logo i svg{width:100%;height:100%}
 .glogo svg{width:60px;height:60px}
 @media(max-width:560px){.logo i{width:34px;height:34px}}
 .search{background:rgba(255,255,255,.06)}
@@ -236,6 +236,16 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
 .obox .ocard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 18px}
 .obox .ocard .oh{color:#9ca3b8}.obox .ocard .it{color:#e5e7f2;line-height:1.7}.obox .ocard .tot{color:#fbbf24;font-size:1.1em}
 .obox .ocard .os{background:rgba(74,222,128,.14);color:#4ade80}
+</style>
+<style>
+#addpop{position:fixed;left:50%;top:84px;transform:translate(-50%,-30px);opacity:0;pointer-events:none;z-index:9999;transition:.3s;width:min(92vw,360px)}
+#addpop.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.apc{background:#121a30;color:#eef2ff;border:1px solid #fbbf24;border-radius:16px;padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.apt{color:#fbbf24;font-weight:800;margin-bottom:10px}.apb{display:flex;gap:12px;align-items:center}
+.apimg{width:48px;height:64px;border-radius:6px;overflow:hidden;flex:none}.apimg img{width:100%;height:100%;object-fit:cover}
+.apx b{display:block;font-size:.95em}.apx small{color:#9aa6c0}
+.apa{display:flex;gap:8px;margin-top:12px}.apa button{flex:1;padding:10px;border-radius:10px;border:1px solid #3b4a75;background:transparent;color:#eef2ff;font-weight:700;cursor:pointer}
+.apa .go{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1b1305;border:0}
 </style>
 </head>
 <body>
@@ -397,7 +407,7 @@ header{background:rgba(9,14,27,.86);backdrop-filter:blur(14px);border-bottom:1px
 </div>
 
 <form name="login" data-netlify="true" hidden><input name="name"><input name="email"><input name="phone"><input name="provider"><input name="uid"></form>
-<form name="order" data-netlify="true" hidden><input name="name"><input name="email"><input name="phone"><input name="state"><input name="addr"><input name="pin"><input name="items"><input name="amount"><input name="payment_id"><input name="order_id"><input name="uid"><input name="note"></form>
+<form name="order" data-netlify="true" hidden><input name="name"><input name="email"><input name="phone"><input name="state"><input name="addr"><input name="pin"><input name="items"><input name="total_books"><input name="book_images"><input name="amount"><input name="payment_id"><input name="order_id"><input name="uid"><input name="note"></form>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -441,7 +451,12 @@ const pic=b=>`<img src="${b.img}" alt="${b.t.replace(/"/g,'')}" loading="lazy" o
 let stock=null; // filled live from Firestore
 function left(id){return stock?(stock[id]??0):null}
 function tag(id){const n=left(id);return n===0?'<span class="tag">Sold out</span>':(n!==null&&n<=3?`<span class="tag low">Only ${n} left</span>`:"")}
-function add(id){const n=left(id);if(n!==null&&(cart[id]||0)>=n)return alert(n===0?"Sorry, this book is sold out.":"Only "+n+" left in stock.");cart[id]=(cart[id]||0)+1;upd()}
+function add(id){const n=left(id);if(n!==null&&(cart[id]||0)>=n)return alert(n===0?"Sorry, this book is sold out.":"Only "+n+" left in stock.");cart[id]=(cart[id]||0)+1;upd();addPop(id)}
+
+let _pt;function addPop(id){const b=books.find(x=>x.id==id);let el=document.getElementById("addpop");
+ if(!el){el=document.createElement("div");el.id="addpop";document.body.appendChild(el)}
+ const n=cart[id];el.innerHTML=`<div class="apc"><div class="apt">✓ Added to cart</div><div class="apb"><div class="apimg" style="background:${b.col}">${pic(b)}</div><div class="apx"><b>${b.t}</b><small>₹${b.p} · Qty ${n}</small></div></div><div class="apa"><button onclick="document.getElementById('addpop').classList.remove('on')">Keep shopping</button><button class="go" onclick="document.getElementById('addpop').classList.remove('on');toggle()">View cart</button></div></div>`;
+ el.classList.add("on");clearTimeout(_pt);_pt=setTimeout(()=>el.classList.remove("on"),3500)}
 function chg(id,d){const n=left(id);if(d>0&&n!==null&&cart[id]>=n)return alert("Only "+n+" left in stock.");cart[id]+=d;if(cart[id]<=0)delete cart[id];upd()}
 function total(){return Object.entries(cart).reduce((s,[id,n])=>s+books.find(b=>b.id==id).p*n,0)}
 function upd(){
@@ -609,7 +624,7 @@ async function pay(){
       handler:async r=>{
         const v=await(await fetch("/.netlify/functions/verify-payment",{method:"POST",body:JSON.stringify(r)})).json();
         if(v.ok){
-          toForm("order",{...d,items:items.map(i=>books.find(b=>b.id===i.id).t+" x"+i.qty).join(", "),amount:o.amount/100,payment_id:r.razorpay_payment_id,order_id:r.razorpay_order_id,uid:user.uid,note:v.oversold?"OVERSOLD: stock ran out just before this order was confirmed. Refund or arrange a restock.":""});
+          toForm("order",{...d,items:items.map(i=>{const b=books.find(x=>x.id===i.id);return b.t+" — Qty: "+i.qty+" × ₹"+b.p+" = ₹"+(b.p*i.qty)}).join("\n"),total_books:items.reduce((a,i)=>a+i.qty,0),book_images:items.map(i=>{const b=books.find(x=>x.id===i.id);return b.t+": "+location.origin+"/"+b.img}).join("\n"),amount:o.amount/100,payment_id:r.razorpay_payment_id,order_id:r.razorpay_order_id,uid:user.uid,note:v.oversold?"OVERSOLD: stock ran out just before this order was confirmed. Refund or arrange a restock.":""});
           cart={};coupon=null;upd();closeCheckout();
           alert(v.oversold?"Payment received. Order ID: "+r.razorpay_order_id+". One book had just sold out, so we will contact you shortly to arrange it or refund you.":"Payment successful! Order ID: "+r.razorpay_order_id);
         }else alert("We could not verify the payment. Please contact us on WhatsApp.");
