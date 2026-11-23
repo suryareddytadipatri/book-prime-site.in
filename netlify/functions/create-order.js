@@ -12,7 +12,7 @@ exports.handler = async (event) => {
     // Who is buying? Verified on the server so nobody can attach an order to someone else's account.
     let uid, email;
     try { const t = await fbAuth.verifyIdToken(idToken); uid = t.uid; email = t.email || null; }
-    catch (e) { return reply(401, { error: "Please log in again and retry." }); }
+    catch (e) { console.error("verifyIdToken failed:", e.code, e.message); return reply(401, { error: "Login check failed (" + (e.code || "error") + "): " + String(e.message || "").slice(0, 140) }); }
     if (!Array.isArray(items) || !items.length) return reply(400, { error: "Invalid cart" });
     // Merge repeated ids so the same book can't be counted twice to get past the stock check
     const merged = {};
