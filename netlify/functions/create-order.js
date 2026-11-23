@@ -1,6 +1,6 @@
 // Creates a Razorpay order. Amount is calculated HERE, never trusted from the browser.
 const { db, auth: fbAuth } = require("../lib/db");
-const PRICES = {1:399,2:499,3:299,4:250,5:299,6:199,7:225,8:699,9:199,10:349}; // same ids/prices as the books list in index.html
+const PRICES = {1:399,2:499,3:299,4:250,5:299,6:20,7:225,8:699,9:199,10:349}; // same ids/prices as the books list in index.html
 const COUPONS = { WELCOME10: 10 };
 const SHIPPING_FEE = 50;
 
@@ -8,7 +8,7 @@ const reply = (s, b) => ({ statusCode: s, headers: { "Content-Type": "applicatio
 
 exports.handler = async (event) => {
   try {
-    const { items = [], coupon, state, idToken } = JSON.parse(event.body || "{}");
+    const { items = [], coupon, state, pin, idToken } = JSON.parse(event.body || "{}");
     // Who is buying? Verified on the server so nobody can attach an order to someone else's account.
     let uid, email;
     try { const t = await fbAuth.verifyIdToken(idToken); uid = t.uid; email = t.email || null; }
@@ -33,7 +33,8 @@ exports.handler = async (event) => {
       if (q < lines[k].qty) return reply(409, { error: q <= 0 ? "Sorry, a book in your cart just sold out." : "Only " + q + " copies left of a book in your cart." });
     }
     const disc = COUPONS[coupon] ? Math.round(sub * COUPONS[coupon] / 100) : 0;
-    const amount = (sub - disc + SHIPPING_FEE) * 100; // paise
+    const shipping = (state === "Telangana" && /^500\d{3}$/.test(String(pin || "").trim())) ? 0 : SHIPPING_FEE; // free in Hyderabad
+    const amount = (sub - disc + shipping) * 100; // paise
 
     const auth = Buffer.from(process.env.RAZORPAY_KEY_ID + ":" + process.env.RAZORPAY_KEY_SECRET).toString("base64");
     const r = await fetch("https://api.razorpay.com/v1/orders", {
@@ -43,7 +44,7 @@ exports.handler = async (event) => {
     });
     const o = await r.json();
     if (!r.ok) return reply(502, { error: (o.error && o.error.description) || "Razorpay error" });
-    await db.collection("orders").doc(o.id).set({ items: lines, amount: o.amount, coupon: coupon || null, state, status: "created", uid, email, subtotal: sub, discount: disc, shipping: SHIPPING_FEE, createdAt: new Date() });
+    await db.collection("orders").doc(o.id).set({ items: lines, amount: o.amount, coupon: coupon || null, state, status: "created", uid, email, subtotal: sub, discount: disc, shipping, createdAt: new Date() });
     return reply(200, { order_id: o.id, amount: o.amount, key_id: process.env.RAZORPAY_KEY_ID });
   } catch (e) {
     return reply(500, { error: "Server error" });
