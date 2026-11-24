@@ -8,7 +8,7 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth != null
                    && request.auth.token.email_verified == true
-                   && request.auth.token.email in ['bookprime.inindia@gmail.com','ravindraoptional@gmail.com'];   // <- owner Google email(s); add more inside the brackets, separated by commas
+                   && request.auth.token.email in ['suryaprakashreddy.tadipatri@gmail.com','ravindraoptional@gmail.com'];   // <- owner Google email(s); add more inside the brackets, separated by commas
     }
 
     // BOOKS (catalogue): everyone can read; only the owner can add / edit / hide books (from admin.html).
@@ -16,7 +16,7 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth != null
                    && request.auth.token.email_verified == true
-                   && request.auth.token.email in ['bookprime.inindia@gmail.com','ravindraoptional@gmail.com'];
+                   && request.auth.token.email in ['suryaprakashreddy.tadipatri@gmail.com','ravindraoptional@gmail.com'];
     }
 
     // ORDERS: a signed-in customer can READ only their own orders (matched by uid). Nobody can write from the browser.
