@@ -39,7 +39,7 @@ const DEFAULT_BOOKS=[
  {"id":44,"t":"So Good They Can't Ignore You","a":"Cal Newport","c":"Productivity","p":399,"img":"","col":"#7e22ce","on":true,"ord":36},
  {"id":45,"t":"The 7 Habits of Highly Effective People","a":"Stephen R. Covey","c":"Self-Help","p":399,"img":"","col":"#3b1d5a","on":true,"ord":37},
  {"id":46,"t":"The Monk Who Sold His Ferrari","a":"Robin Sharma","c":"Self-Help","p":250,"img":"","col":"#c2410c","on":true,"ord":38},
- {"id":47,"t":"You Can Have It All","a":"Arnold M. Patent","c":"Self-Help","p":299,"img":"","col":"#be185d","on":true,"ord":39},
+ {"id":47,"t":"You Can Have It All","a":"Gaur Gopal Das","c":"Self-Help","p":299,"img":"","col":"#be185d","on":true,"ord":39},
  {"id":48,"t":"Do Epic Shit","a":"Ankur Warikoo","c":"Self-Help","p":299,"img":"","col":"#1d4ed8","on":true,"ord":40},
  {"id":49,"t":"Life's Amazing Secrets","a":"Gaur Gopal Das","c":"Self-Help","p":250,"img":"","col":"#7c3aed","on":true,"ord":41},
  {"id":50,"t":"Get Epic Shit Done","a":"Ankur Warikoo","c":"Productivity","p":299,"img":"","col":"#0f766e","on":true,"ord":42},
