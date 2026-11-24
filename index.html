@@ -544,7 +544,7 @@ function initAuth(){
   // Live catalogue: books the owner adds/edits in admin.html (falls back to books-data.js when none saved yet)
   firebase.firestore().collection("books").onSnapshot(snap=>{
     if(snap.empty)return;
-    books=snap.docs.map(d=>({id:+d.id,...d.data()})).sort((a,b)=>(a.ord||999)-(b.ord||999));
+    books=snap.docs.map(d=>{const x=d.data();return {id:+d.id,...x,img:x.img||"images/book-"+d.id+".jpg"}}).sort((a,b)=>(a.ord||999)-(b.ord||999));
     Object.keys(cart).forEach(id=>{const b=books.find(x=>x.id==id);if(!b||b.on===false)delete cart[id]});
     mkCats();if(cat!=="All"&&!catList.includes(cat))cat="All";render();upd();if($("co").classList.contains("open"))sumUpd();
   },e=>console.log("books error",e));
